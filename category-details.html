@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LG Subscribe — Program Details</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --lg-white:#FFFFFF; --lg-red:#A50034; --lg-red-dark:#7C0027; --lg-ink:#17181A;
+    --lg-mist:#F4F4F6; --lg-line:#E5E5E8; --lg-sub:#6B6B70; --lg-red-tint:#FBE9EE;
+    padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); box-sizing:border-box;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{margin:0; background:var(--lg-white); color:var(--lg-ink); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Poppins',sans-serif;}
+  .container{max-width:1240px; margin:0 auto; padding:0 28px;}
+  @media(max-width:640px){.container{padding:0 18px;}}
+
+  nav{position:sticky; top:0; top:env(safe-area-inset-top,0px); z-index:60; background:rgba(255,255,255,.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--lg-line);}
+  .nav-row{display:flex; align-items:center; justify-content:space-between; height:72px; gap:16px;}
+  .nav-left{display:flex; align-items:center; gap:18px;}
+  .nav-logo{font-family:'Poppins'; font-weight:700; font-size:20px;}
+  .nav-logo span{color:var(--lg-red);}
+  .back-link{color:var(--lg-sub); font-size:14.5px; font-weight:500; text-decoration:none; white-space:nowrap;}
+  .back-link:hover{color:var(--lg-ink);}
+  .lang-toggle{display:flex; background:var(--lg-mist); border-radius:999px; padding:4px; gap:2px;}
+  .lang-btn{border:none; background:transparent; padding:8px 16px; border-radius:999px; font-family:'Inter'; font-weight:600; font-size:13.5px; cursor:pointer; color:var(--lg-sub); transition:all .15s ease;}
+  .lang-btn.active{background:var(--lg-red); color:#fff;}
+  .nav-logo-img{height:30px; display:block;}
+
+  header.page-head{padding:48px 0 28px; text-align:center; background:radial-gradient(ellipse at 50% 0%, #fff 0%, var(--lg-mist) 130%);}
+  header.page-head h1{font-size:clamp(26px,3.6vw,38px); font-weight:700; margin:0 0 10px;}
+  header.page-head p{color:var(--lg-sub); font-size:16px; max-width:560px; margin:0 auto 20px; line-height:1.55;}
+  .period-pill{display:inline-block; background:var(--lg-red-tint); color:var(--lg-red); font-size:13.5px; font-weight:600; padding:9px 20px; border-radius:999px;}
+
+  .tabs-wrap{position:sticky; top:72px; top:calc(env(safe-area-inset-top,0px) + 72px); z-index:50; background:#fff; border-bottom:1px solid var(--lg-line); padding:14px 0;}
+  .tabs{display:flex; gap:10px; overflow-x:auto; scrollbar-width:none; padding:2px;}
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab{flex:none; border:1.5px solid var(--lg-line); background:#fff; color:var(--lg-ink); font-family:'Inter'; font-weight:600; font-size:14.5px; padding:11px 20px; border-radius:999px; cursor:pointer; white-space:nowrap; transition:all .15s ease;}
+  .tab:hover{border-color:var(--lg-ink);}
+  .tab.active{background:var(--lg-red); border-color:var(--lg-red); color:#fff;}
+
+  .results-bar{display:flex; align-items:center; justify-content:space-between; margin:28px 0 20px; flex-wrap:wrap; gap:10px;}
+  .results-count{color:var(--lg-sub); font-size:14.5px; font-weight:500;}
+
+  main{padding-bottom:80px;}
+  .product-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:20px;}
+  .pcard{background:#fff; border:1px solid var(--lg-line); border-radius:20px; padding:24px; transition:transform .2s ease, box-shadow .2s ease;}
+  .pcard:hover{transform:translateY(-3px); box-shadow:0 20px 40px -26px rgba(0,0,0,.25);}
+  .pcard-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:14px;}
+  .pcard-cat{font-size:12px; font-weight:600; color:var(--lg-red); text-transform:uppercase; letter-spacing:.4px; margin-bottom:4px;}
+  .pcard-model{font-family:'Poppins'; font-weight:600; font-size:16.5px; line-height:1.3; word-break:break-word;}
+  .pimg{height:170px; margin:-4px 0 16px; border-radius:14px; background:#fff; border:1px solid var(--lg-line); display:flex; align-items:center; justify-content:center; overflow:hidden;}
+  .pimg img{width:100%; height:100%; object-fit:contain; display:block;}
+  .pimg.empty{background:var(--lg-mist); border-color:var(--lg-mist);}
+  .discount-badge{flex:none; background:var(--lg-red); color:#fff; font-size:12.5px; font-weight:700; padding:5px 11px; border-radius:999px; white-space:nowrap;}
+  .price-row{display:flex; align-items:baseline; gap:10px; margin-bottom:4px; flex-wrap:wrap;}
+  .price-list{color:var(--lg-sub); font-size:14px; text-decoration:line-through;}
+  .price-sub{font-family:'Poppins'; font-weight:700; font-size:21px;}
+  .price-caption{color:var(--lg-sub); font-size:12.5px; margin-bottom:16px;}
+  .monthly-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:16px;}
+  .monthly-chip{min-width:0; background:var(--lg-mist); border-radius:12px; padding:10px 6px; text-align:center;}
+  .monthly-chip .mc-term{font-size:11px; color:var(--lg-sub); font-weight:600; margin-bottom:3px;}
+  .monthly-chip .mc-amt{font-family:'Poppins'; font-weight:700; font-size:12px; white-space:nowrap;}
+  .gift-label{font-size:12px; font-weight:600; color:var(--lg-sub); margin-bottom:8px; text-transform:uppercase; letter-spacing:.3px;}
+  .gift-chips{display:flex; flex-wrap:wrap; gap:6px;}
+  .gift-chip{background:var(--lg-red-tint); color:var(--lg-red); font-size:12px; font-weight:600; padding:5px 10px; border-radius:8px;}
+  .no-gift{color:var(--lg-sub); font-size:12.5px; font-style:italic;}
+
+  .empty-state{text-align:center; padding:80px 20px; color:var(--lg-sub);}
+  .empty-state h3{font-size:20px; color:var(--lg-ink); margin-bottom:8px;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-row">
+    <div class="nav-left">
+      <img class="nav-logo-img" src="lg-subscribe-logo.png" alt="LG Subscribe">
+      <a href="index.html" class="back-link" data-i18n="back">← Back to home</a>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btnVI" onclick="setLang('vi')">VI</button>
+      <button class="lang-btn" id="btnKO" onclick="setLang('ko')">KO</button>
+    </div>
+  </div>
+</nav>
+
+<header class="page-head">
+  <div class="container">
+    <h1 data-i18n="title">LG Subscribe — Program Details</h1>
+    <p data-i18n="subtitle">Current pricing, discounts and gifts for every eligible LG product.</p>
+    <span class="period-pill" data-i18n="period">Monthly pricing valid 06/10 – 30/10/2026 · Total paid pricing valid 08/10 – 30/10/2026</span>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <div class="container">
+    <div class="tabs" id="tabs"></div>
+  </div>
+</div>
+
+<main class="container">
+  <div class="results-bar">
+    <div class="results-count" id="resultsCount"></div>
+  </div>
+  <div id="productGrid" class="product-grid"></div>
+  <div id="emptyState" class="empty-state" style="display:none;">
+    <h3 data-i18n="empty_h">No products in this category yet</h3>
+    <p data-i18n="empty_p">No current promotion for this category.</p>
+  </div>
+</main>
+
+<script>
+const PRODUCTS = [{"no":"1","cat":"Air Care","model":"AS10GDWH0.ABAE","list":34900000,"onetime":20917000,"m12":1810000,"m24":1060000,"m36":810000,"evoucher":4000000,"gift1":"MS2032GIK","gift2":"PFPABA01.FOC","voucherSouth":1500000,"voucherMB":1000000,"discount":40},{"no":"2","cat":"Air Care","model":"AS65GDWH0.ABAE","list":26100000,"onetime":15293000,"m12":1320000,"m24":770000,"m36":590000,"evoucher":2000000,"gift1":null,"gift2":"PFPABA01.FOC","voucherSouth":1000000,"voucherMB":null,"discount":41},{"no":"3","cat":"Air Care","model":"AS20GPBK0.ABAE","list":15750000,"onetime":9225000,"m12":800000,"m24":490000,"m36":390000,"evoucher":null,"gift1":null,"gift2":"PWHGDA01.ASTD","voucherSouth":500000,"voucherMB":null,"discount":41},{"no":"4","cat":"Air Care","model":"AS20GPWU0.ABAE","list":15750000,"onetime":9225000,"m12":800000,"m24":490000,"m36":390000,"evoucher":null,"gift1":null,"gift2":"PWHGDA01.ASTD","voucherSouth":500000,"voucherMB":null,"discount":41},{"no":"5","cat":"Air Care","model":"AS20GSHU0.ABAE","list":20000000,"onetime":11410000,"m12":990000,"m24":590000,"m36":460000,"evoucher":1000000,"gift1":null,"gift2":"PWHGDA01.ASTD","voucherSouth":1000000,"voucherMB":null,"discount":43},{"no":"6","cat":"Air Care","model":"FS15GPBK0.ABAE","list":16500000,"onetime":9600000,"m12":830000,"m24":510000,"m36":400000,"evoucher":null,"gift1":null,"gift2":null,"voucherSouth":1000000,"voucherMB":null,"discount":42},{"no":"7","cat":"Air Care","model":"AS30GGW1A.ABAE","list":5900000,"onetime":4195000,"m12":370000,"m24":240000,"m36":200000,"evoucher":null,"gift1":null,"gift2":"PFSAZC01.ASTD","voucherSouth":500000,"voucherMB":null,"discount":29},{"no":"8","cat":"Air Care","model":"AS30GGG1A.ABAE","list":5900000,"onetime":4195000,"m12":370000,"m24":240000,"m36":200000,"evoucher":null,"gift1":null,"gift2":"PFSAZC01.ASTD","voucherSouth":500000,"voucherMB":null,"discount":29},{"no":"9","cat":"Air Care","model":"AS10GDBY0.ABAE","list":38100000,"onetime":22673000,"m12":1960000,"m24":1140000,"m36":870000,"evoucher":4000000,"gift1":"MS2032GIK","gift2":"PFPAAA01.FOC","voucherSouth":1500000,"voucherMB":1000000,"discount":40},{"no":"10","cat":"Air Care","model":"AS65GDBY0.ABAE","list":28300000,"onetime":17359000,"m12":1500000,"m24":900000,"m36":700000,"evoucher":3000000,"gift1":"MS2032GIK","gift2":"PFPAAA01.FOC","voucherSouth":1000000,"voucherMB":1000000,"discount":39},{"no":"11","cat":"Air Care","model":"AS55GGSY0.ABAE","list":24360000,"onetime":15270800,"m12":1320000,"m24":810000,"m36":640000,"evoucher":3000000,"gift1":null,"gift2":null,"voucherSouth":1000000,"voucherMB":1000000,"discount":37},{"no":"12","cat":"Air Care","model":"AS60GHWG0.ABAE","list":8260000,"onetime":5327800,"m12":460000,"m24":300000,"m36":240000,"evoucher":null,"gift1":null,"gift2":null,"voucherSouth":500000,"voucherMB":null,"discount":35},{"no":"13","cat":"Air Care","model":"MD16GQSE0.ABAE","list":16050000,"onetime":8856500,"m12":770000,"m24":440000,"m36":320000,"evoucher":null,"gift1":null,"gift2":"PDKACC01.ASTD","voucherSouth":500000,"voucherMB":null,"discount":45},{"no":"14","cat":"Air Care","model":"MD19GQGE0.ABAE","list":16990000,"onetime":9354700,"m12":810000,"m24":460000,"m36":340000,"evoucher":null,"gift1":null,"gift2":"PDKACC01.ASTD","voucherSouth":500000,"voucherMB":null,"discount":45},{"no":"15","cat":"Air Care","model":"W60GLGG0.ABAE","list":15000000,"onetime":9350000,"m12":810000,"m24":490000,"m36":380000,"evoucher":2000000,"gift1":null,"gift2":null,"voucherSouth":500000,"voucherMB":null,"discount":38},{"no":"16","cat":"Refrigerators","model":"LBB33BLGA.ABMPEVN","list":19590000,"onetime":14350000,"m12":1240000,"m24":670000,"m36":480000,"evoucher":4000000,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":27},{"no":"17","cat":"Refrigerators","model":"LBB33BLM.AEPPEVN","list":16690000,"onetime":10200000,"m12":890000,"m24":490000,"m36":350000,"evoucher":null,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":39},{"no":"18","cat":"Refrigerators","model":"LBB33BGMAI.ABEPEVN","list":24490000,"onetime":17910000,"m12":1550000,"m24":840000,"m36":610000,"evoucher":4000000,"gift1":"MS2032GIK","gift2":null,"voucherSouth":null,"voucherMB":1000000,"discount":27},{"no":"23","cat":"Refrigerators","model":"LFD61BLGAI.ABMPEVN","list":53990000,"onetime":36750100,"m12":3180000,"m24":1700000,"m36":1210000,"evoucher":8000000,"gift1":"AS30GGW1A","gift2":null,"voucherSouth":null,"voucherMB":3000000,"discount":32},{"no":"24","cat":"Refrigerators","model":"LFD58BLMAI.AEPPEVN","list":36290000,"onetime":31280100,"m12":2700000,"m24":1440000,"m36":1020000,"evoucher":8000000,"gift1":"AS30GGW1A","gift2":null,"voucherSouth":null,"voucherMB":2000000,"discount":14},{"no":"25","cat":"Refrigerators","model":"F61BMD.AEPPEVN","list":30990000,"onetime":25470000,"m12":2200000,"m24":1180000,"m36":840000,"evoucher":4000000,"gift1":"MS2032GIK","gift2":null,"voucherSouth":null,"voucherMB":2000000,"discount":18},{"no":"26","cat":"Refrigerators","model":"F58BGD.ABMPEVN","list":30990000,"onetime":25470000,"m12":2200000,"m24":1180000,"m36":840000,"evoucher":4000000,"gift1":"MS2032GIK","gift2":null,"voucherSouth":null,"voucherMB":2000000,"discount":18},{"no":"27","cat":"Refrigerators","model":"LFB58BLMA.AEPPEVN","list":34390000,"onetime":22470000,"m12":1940000,"m24":1050000,"m36":750000,"evoucher":4000000,"gift1":"MS2032GIK","gift2":null,"voucherSouth":null,"voucherMB":2000000,"discount":35},{"no":"28","cat":"Refrigerators","model":"F51EG.ADMPEVN","list":26990000,"onetime":21470000,"m12":1860000,"m24":1010000,"m36":720000,"evoucher":4000000,"gift1":"MS2032GIK","gift2":null,"voucherSouth":null,"voucherMB":2000000,"discount":20},{"no":"29","cat":"Refrigerators","model":"F50BG.ADBPEVN","list":18990000,"onetime":15350000,"m12":1330000,"m24":720000,"m36":510000,"evoucher":4000000,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":19},{"no":"30","cat":"Refrigerators","model":"GR-X257BG.AEEPEVN","list":58690000,"onetime":36750100,"m12":3180000,"m24":1700000,"m36":1210000,"evoucher":8000000,"gift1":"AS30GGW1A","gift2":null,"voucherSouth":null,"voucherMB":3000000,"discount":37},{"no":"31","cat":"Refrigerators","model":"LSI63BLMA.AEPPEVN","list":35090000,"onetime":24470000,"m12":2120000,"m24":1140000,"m36":810000,"evoucher":4000000,"gift1":"MS2032GIK","gift2":null,"voucherSouth":null,"voucherMB":2000000,"discount":30},{"no":"32","cat":"Refrigerators","model":"T33SV.APYPEVN","list":11590000,"onetime":7940000,"m12":690000,"m24":380000,"m36":270000,"evoucher":null,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":31},{"no":"33","cat":"Refrigerators","model":"T30SV.APYPEVN","list":10490000,"onetime":7440000,"m12":650000,"m24":360000,"m36":260000,"evoucher":null,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":29},{"no":"34","cat":"Refrigerators","model":"T26BG.AGKPEVN","list":7790000,"onetime":7050000,"m12":610000,"m24":340000,"m36":250000,"evoucher":null,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":9},{"no":"35","cat":"Refrigerators","model":"T21BG.AGKPEVN","list":7290000,"onetime":6650000,"m12":580000,"m24":320000,"m36":230000,"evoucher":null,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":9},{"no":"36","cat":"TVs","model":"86MRGB86BSA.ATV","list":113900000,"onetime":85170000,"m12":7350000,"m24":3970000,"m36":2840000,"evoucher":8000000,"gift1":"AS30GGW1A","gift2":"S70TY.AVNMLLD","voucherSouth":null,"voucherMB":null,"discount":25},{"no":"37","cat":"TVs","model":"75MRGB86BSA.ATV","list":82900000,"onetime":59900000,"m12":5170000,"m24":2840000,"m36":2070000,"evoucher":6000000,"gift1":"AS30GGW1A","gift2":"S70TY.AVNMLLD","voucherSouth":null,"voucherMB":null,"discount":28},{"no":"38","cat":"TVs","model":"65MRGB86BSA.ATV","list":51600000,"onetime":35560000,"m12":3070000,"m24":1670000,"m36":1190000,"evoucher":6000000,"gift1":"AS30GGW1A","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":31},{"no":"39","cat":"TVs","model":"OLED83W6PSA.ATV","list":219900000,"onetime":201300000,"m12":17370000,"m24":9160000,"m36":6390000,"evoucher":8000000,"gift1":"AS30GGW1A","gift2":"OLED55C6PSA.ATV","voucherSouth":null,"voucherMB":null,"discount":8},{"no":"40","cat":"TVs","model":"OLED77G6PSA.ATV","list":113900000,"onetime":99250000,"m12":8570000,"m24":4600000,"m36":3260000,"evoucher":8000000,"gift1":"AS30GGW1A","gift2":"43NU855BPSA.ATV","voucherSouth":null,"voucherMB":null,"discount":13},{"no":"41","cat":"TVs","model":"OLED65G6PSA.ATV","list":70900000,"onetime":55860000,"m12":4820000,"m24":2660000,"m36":1940000,"evoucher":8000000,"gift1":"AS30GGW1A","gift2":"43NU855BPSA.ATV","voucherSouth":null,"voucherMB":null,"discount":21},{"no":"42","cat":"TVs","model":"OLED55G6PSA.ATV","list":55900000,"onetime":49680000,"m12":4290000,"m24":2300000,"m36":1620000,"evoucher":8000000,"gift1":"AS30GGW1A","gift2":"S70TY.AVNMLLD","voucherSouth":null,"voucherMB":null,"discount":11},{"no":"43","cat":"TVs","model":"OLED83C6PSA.ATV","list":136900000,"onetime":90150000,"m12":7780000,"m24":4190000,"m36":2990000,"evoucher":8000000,"gift1":"AS30GGW1A","gift2":"43NU855BPSA.ATV","voucherSouth":null,"voucherMB":null,"discount":34},{"no":"44","cat":"TVs","model":"OLED77C6PSA.ATV","list":92900000,"onetime":75150000,"m12":6490000,"m24":3530000,"m36":2540000,"evoucher":8000000,"gift1":"AS30GGW1A","gift2":"S70TY.AVNMLLD","voucherSouth":null,"voucherMB":null,"discount":19},{"no":"45","cat":"TVs","model":"OLED65C6PSA.ATV","list":63900000,"onetime":42680000,"m12":3690000,"m24":1990000,"m36":1410000,"evoucher":8000000,"gift1":"AS30GGW1A","gift2":"S70TY.AVNMLLD","voucherSouth":null,"voucherMB":null,"discount":33},{"no":"46","cat":"TVs","model":"OLED55C6PSA.ATV","list":49400000,"onetime":31560000,"m12":2730000,"m24":1490000,"m36":1070000,"evoucher":8000000,"gift1":"AS30GGW1A","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":36},{"no":"47","cat":"TVs","model":"OLED77B6PSA.ATV","list":79900000,"onetime":59900000,"m12":5170000,"m24":2840000,"m36":2070000,"evoucher":8000000,"gift1":"AS30GGW1A","gift2":"S70TY.AVNMLLD","voucherSouth":null,"voucherMB":null,"discount":25},{"no":"48","cat":"TVs","model":"OLED65B6PSA.ATV","list":54900000,"onetime":32650000,"m12":2820000,"m24":1540000,"m36":1110000,"evoucher":6000000,"gift1":"AS30GGW1A","gift2":"S70TY.AVNMLLD","voucherSouth":null,"voucherMB":null,"discount":41},{"no":"49","cat":"TVs","model":"OLED55B6PSA.ATV","list":41400000,"onetime":24530000,"m12":2120000,"m24":1160000,"m36":830000,"evoucher":3000000,"gift1":"MINI.AASALBK","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":41},{"no":"50","cat":"TVs","model":"100QNED86BS.ATV","list":136900000,"onetime":90270000,"m12":7790000,"m24":4200000,"m36":2990000,"evoucher":8000000,"gift1":"AS30GGW1A","gift2":"43NU855BPSA.ATV","voucherSouth":null,"voucherMB":null,"discount":34},{"no":"51","cat":"TVs","model":"86QNED86BSA.ATV","list":64400000,"onetime":44740000,"m12":3870000,"m24":2080000,"m36":1480000,"evoucher":3000000,"gift1":"AS30GGW1A","gift2":"S30A.AVNMLLK","voucherSouth":null,"voucherMB":null,"discount":31},{"no":"52","cat":"TVs","model":"75QNED86BSA.ATV","list":41900000,"onetime":30540000,"m12":2640000,"m24":1430000,"m36":1020000,"evoucher":6000000,"gift1":"AS30GGW1A","gift2":"S30A.AVNMLLK","voucherSouth":null,"voucherMB":null,"discount":27},{"no":"53","cat":"TVs","model":"65QNED86BSA.ATV","list":29900000,"onetime":23440000,"m12":2030000,"m24":1110000,"m36":800000,"evoucher":3000000,"gift1":"MINI.AASALBK","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":22},{"no":"54","cat":"TVs","model":"55QNED86BSA.ATV","list":23900000,"onetime":17380000,"m12":1500000,"m24":820000,"m36":590000,"evoucher":3000000,"gift1":"MINI.AASALBK","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":27},{"no":"55","cat":"TVs","model":"85QNED80BSA.ATV","list":49400000,"onetime":31620000,"m12":2730000,"m24":1490000,"m36":1080000,"evoucher":null,"gift1":"AS30GGW1A","gift2":"S30A.AVNMLLK","voucherSouth":null,"voucherMB":null,"discount":36},{"no":"56","cat":"TVs","model":"75QNED80BSA.ATV","list":36900000,"onetime":22480000,"m12":1940000,"m24":1070000,"m36":780000,"evoucher":3000000,"gift1":"MINI.AASALBK","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":39},{"no":"57","cat":"TVs","model":"65QNED80BSA.ATV","list":25400000,"onetime":17380000,"m12":1500000,"m24":840000,"m36":620000,"evoucher":3000000,"gift1":"MINI.AASALBK","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":32},{"no":"58","cat":"TVs","model":"55QNED80BSA.ATV","list":19400000,"onetime":13820000,"m12":1200000,"m24":660000,"m36":480000,"evoucher":3000000,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":29},{"no":"59","cat":"TVs","model":"50QNED80BSA.ATV","list":16400000,"onetime":14785000,"m12":1280000,"m24":700000,"m36":510000,"evoucher":3000000,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":10},{"no":"60","cat":"TVs","model":"43QNED80BSA.ATV","list":13400000,"onetime":12285000,"m12":1060000,"m24":590000,"m36":430000,"evoucher":3000000,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":8},{"no":"61","cat":"TVs","model":"98NU855BPSB.ATVQ","list":64400000,"onetime":40670000,"m12":3510000,"m24":1900000,"m36":1350000,"evoucher":6000000,"gift1":"AS30GGW1A","gift2":"S30A.AVNMLLK","voucherSouth":null,"voucherMB":null,"discount":37},{"no":"62","cat":"TVs","model":"85NU855BPSA.ATV","list":36900000,"onetime":27560000,"m12":2380000,"m24":1300000,"m36":930000,"evoucher":3000000,"gift1":"AS30GGW1A","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":25},{"no":"63","cat":"TVs","model":"75NU855BPSA.ATV","list":26400000,"onetime":19420000,"m12":1680000,"m24":930000,"m36":680000,"evoucher":3000000,"gift1":"MINI.AASALBK","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":26},{"no":"64","cat":"TVs","model":"65NU855BPSA.ATV","list":19400000,"onetime":14320000,"m12":1240000,"m24":680000,"m36":500000,"evoucher":3000000,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":26},{"no":"65","cat":"TVs","model":"55NU855BPSA.ATV","list":15500000,"onetime":12320000,"m12":1070000,"m24":590000,"m36":440000,"evoucher":3000000,"gift1":"MINI.AASALBK","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":21},{"no":"66","cat":"TVs","model":"50NU855BPSA.ATV","list":13900000,"onetime":10785000,"m12":940000,"m24":530000,"m36":390000,"evoucher":null,"gift1":"MINI.AASALBK","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":22},{"no":"67","cat":"TVs","model":"43NU855BPSA.ATV","list":11400000,"onetime":9225000,"m12":800000,"m24":450000,"m36":330000,"evoucher":null,"gift1":"MINI.AASALBK","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":19},{"no":"68","cat":"Air Conditioners","model":"IDC09M2.ATYGEVH","list":13990000,"onetime":10804100,"m12":940000,"m24":510000,"m36":370000,"evoucher":1000000,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":23},{"no":"69","cat":"Air Conditioners","model":"IDC12M2.ATYGEVH","list":16490000,"onetime":12388100,"m12":1070000,"m24":580000,"m36":420000,"evoucher":4000000,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":25},{"no":"70","cat":"Air Conditioners","model":"IDC18M2.ATYGEVH","list":25190000,"onetime":20552100,"m12":1780000,"m24":960000,"m36":690000,"evoucher":4000000,"gift1":"MS2032GIK","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":18},{"no":"71","cat":"Air Conditioners","model":"IDH09M1.ATYGEVH","list":15090000,"onetime":13378100,"m12":1160000,"m24":630000,"m36":450000,"evoucher":4000000,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":11},{"no":"72","cat":"Air Conditioners","model":"IDH12M1.ATYGEVH","list":18490000,"onetime":16309100,"m12":1410000,"m24":760000,"m36":540000,"evoucher":4000000,"gift1":"MS2032GIK","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":12},{"no":"73","cat":"Air Conditioners","model":"IDH18M1.ATYGEVH","list":28540000,"onetime":26453100,"m12":2290000,"m24":1230000,"m36":870000,"evoucher":8000000,"gift1":"AS30GGW1A","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":7},{"no":"74","cat":"Air Conditioners","model":"IDH24M1.ATYGEVH","list":36890000,"onetime":34730100,"m12":3000000,"m24":1600000,"m36":1120000,"evoucher":8000000,"gift1":"AS30GGW1A","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":6},{"no":"19","cat":"Refrigerators","model":"LDT14BGA3.ANBPEVN","list":29440000,"onetime":20628100,"m12":1780000,"m24":1020000,"m36":760000,"evoucher":4000000,"gift1":"MS2032GIK","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":30},{"no":"20","cat":"Refrigerators","model":"LDT14BLA4.ABMPEVN","list":24540000,"onetime":17988000,"m12":1560000,"m24":900000,"m36":680000,"evoucher":4000000,"gift1":"MS2032GIK","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":27},{"no":"21","cat":"Refrigerators","model":"LDT14SVA4.APYPEVN","list":24540000,"onetime":16988000,"m12":1470000,"m24":850000,"m36":650000,"evoucher":4000000,"gift1":"MS2032GIK","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":31},{"no":"22","cat":"Refrigerators","model":"LDN14BLA5.ABMPEVN","list":21990000,"onetime":15988000,"m12":1380000,"m24":790000,"m36":600000,"evoucher":4000000,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":27},{"no":"75","cat":"Cooking","model":"MS2535GIK.BSEPLVN","list":5880000,"onetime":3527500,"m12":310000,"m24":180000,"m36":140000,"evoucher":null,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":40},{"no":"76","cat":"Cooking","model":"MS3032JAS.BBKPLVN","list":4900000,"onetime":3027500,"m12":270000,"m24":160000,"m36":130000,"evoucher":null,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":38},{"no":"77","cat":"Cooking","model":"MS2032GIK.BSEPLVN","list":3920000,"onetime":2427500,"m12":210000,"m24":130000,"m36":100000,"evoucher":null,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":38},{"no":"78","cat":"Cooking","model":"MS2032GAS.BBKPLVN","list":3430000,"onetime":2192500,"m12":190000,"m24":120000,"m36":90000,"evoucher":null,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":36},{"no":"79","cat":"Audio","model":"S95AR.DVNMLLK","list":22000000,"onetime":16370000,"m12":1420000,"m24":790000,"m36":590000,"evoucher":2000000,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":26},{"no":"80","cat":"Audio","model":"SG10TY.DVNMLLK","list":14600000,"onetime":8368000,"m12":730000,"m24":420000,"m36":320000,"evoucher":null,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":43},{"no":"81","cat":"Audio","model":"STAGE301.AVNMLBK","list":6800000,"onetime":4700000,"m12":410000,"m24":240000,"m36":180000,"evoucher":null,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":31},{"no":"82","cat":"Audio","model":"STAGE501.AVNMLBK","list":13000000,"onetime":8750000,"m12":760000,"m24":430000,"m36":320000,"evoucher":null,"gift1":null,"gift2":null,"voucherSouth":null,"voucherMB":null,"discount":33},{"no":"83","cat":"TVs","model":"27LX6TDGA.ATV","list":33900000,"onetime":20380000,"m12":1760000,"m24":970000,"m36":710000,"evoucher":3000000,"gift1":"MINI.AASALBK","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":40},{"no":"84","cat":"TVs","model":"32LX6BDGA.ATV","list":36900000,"onetime":25440000,"m12":2200000,"m24":1200000,"m36":860000,"evoucher":4000000,"gift1":"MINI.AASALBK","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":31},{"no":"85","cat":"Monitors","model":"32U889SA-W.ATV","list":29900000,"onetime":25040000,"m12":2170000,"m24":1180000,"m36":850000,"evoucher":4000000,"gift1":"MINI.AASALBK","gift2":null,"voucherSouth":null,"voucherMB":null,"discount":16}];
+
+const IMG_MAP = {"STAGE301.AVNMLBK":"img/STAGE301.webp","STAGE501.AVNMLBK":"img/STAGE501.webp","SG10TY.DVNMLLK":"img/SG10TY.webp","S95AR.DVNMLLK":"img/S95AR.webp","AS10GDWH0.ABAE":"img/AS10GDWH0.webp","AS65GDWH0.ABAE":"img/AS65GDWH0.webp","AS20GPBK0.ABAE":"img/AS20GPBK0.webp","AS20GPWU0.ABAE":"img/AS20GPWU0.webp","AS20GSHU0.ABAE":"img/AS20GSHU0.webp","FS15GPBK0.ABAE":"img/FS15GPBK0.webp","AS30GGW1A.ABAE":"img/AS30GGW1A.webp","AS30GGG1A.ABAE":"img/AS30GGG1A.webp","AS10GDBY0.ABAE":"img/AS10GDBY0.webp","AS65GDBY0.ABAE":"img/AS65GDBY0.webp","AS55GGSY0.ABAE":"img/AS55GGSY0.webp","AS60GHWG0.ABAE":"img/AS60GHWG0.webp","MD16GQSE0.ABAE":"img/MD16GQSE0.webp","MD19GQGE0.ABAE":"img/MD19GQGE0.webp","W60GLGG0.ABAE":"img/W60GLGG0.webp","LBB33BLGA.ABMPEVN":"img/LBB33BLGA.webp","LBB33BLM.AEPPEVN":"img/LBB33BLM.webp","LBB33BGMAI.ABEPEVN":"img/LBB33BGMAI.webp","LFD61BLGAI.ABMPEVN":"img/LFD61BLGAI.webp","LFD58BLMAI.AEPPEVN":"img/LFD58BLMAI.webp","F61BMD.AEPPEVN":"img/F61BMD.webp","F58BGD.ABMPEVN":"img/F58BGD.webp","LFB58BLMA.AEPPEVN":"img/LFB58BLMA.webp","F51EG.ADMPEVN":"img/F51EG.webp","F50BG.ADBPEVN":"img/F50BG.webp","GR-X257BG.AEEPEVN":"img/GR-X257BG.webp","LSI63BLMA.AEPPEVN":"img/LSI63BLMA.webp","T33SV.APYPEVN":"img/T33SV.webp","T30SV.APYPEVN":"img/T30SV.webp","T26BG.AGKPEVN":"img/T26BG.webp","T21BG.AGKPEVN":"img/T21BG.webp","86MRGB86BSA.ATV":"img/tv-MRG.webp","75MRGB86BSA.ATV":"img/tv-MRG.webp","65MRGB86BSA.ATV":"img/tv-MRG.webp","OLED83W6PSA.ATV":"img/tv-OLED.webp","OLED77G6PSA.ATV":"img/tv-OLED.webp","OLED65G6PSA.ATV":"img/tv-OLED.webp","OLED55G6PSA.ATV":"img/tv-OLED.webp","OLED83C6PSA.ATV":"img/tv-OLED.webp","OLED77C6PSA.ATV":"img/tv-OLED.webp","OLED65C6PSA.ATV":"img/tv-OLED.webp","OLED55C6PSA.ATV":"img/tv-OLED.webp","OLED77B6PSA.ATV":"img/tv-OLED.webp","OLED65B6PSA.ATV":"img/tv-OLED.webp","OLED55B6PSA.ATV":"img/tv-OLED.webp","100QNED86BS.ATV":"img/100QNED86BS.webp","86QNED86BSA.ATV":"img/tv-QNED.webp","75QNED86BSA.ATV":"img/tv-QNED.webp","65QNED86BSA.ATV":"img/tv-QNED.webp","55QNED86BSA.ATV":"img/tv-QNED.webp","85QNED80BSA.ATV":"img/tv-QNED.webp","75QNED80BSA.ATV":"img/tv-QNED.webp","65QNED80BSA.ATV":"img/tv-QNED.webp","55QNED80BSA.ATV":"img/tv-QNED.webp","50QNED80BSA.ATV":"img/tv-QNED.webp","43QNED80BSA.ATV":"img/tv-QNED.webp","98NU855BPSB.ATVQ":"img/tv-NU.webp","85NU855BPSA.ATV":"img/tv-NU.webp","75NU855BPSA.ATV":"img/tv-NU.webp","65NU855BPSA.ATV":"img/tv-NU.webp","55NU855BPSA.ATV":"img/tv-NU.webp","50NU855BPSA.ATV":"img/tv-NU.webp","43NU855BPSA.ATV":"img/tv-NU.webp","IDC09M2.ATYGEVH":"img/ac-idc-idh.webp","IDC12M2.ATYGEVH":"img/ac-idc-idh.webp","IDC18M2.ATYGEVH":"img/ac-idc-idh.webp","IDH09M1.ATYGEVH":"img/ac-idc-idh.webp","IDH12M1.ATYGEVH":"img/ac-idc-idh.webp","IDH18M1.ATYGEVH":"img/ac-idc-idh.webp","IDH24M1.ATYGEVH":"img/ac-idc-idh.webp","LDT14BGA3.ANBPEVN":"img/LDT14BGA3.webp","LDT14BLA4.ABMPEVN":"img/LDT14BLA4.webp","LDT14SVA4.APYPEVN":"img/LDT14SVA4.webp","LDN14BLA5.ABMPEVN":"img/LDN14BLA5.webp","MS2535GIK.BSEPLVN":"img/MS2535GIK.webp","MS3032JAS.BBKPLVN":"img/MS3032JAS.webp","MS2032GIK.BSEPLVN":"img/MS2032GIK.webp","MS2032GAS.BBKPLVN":"img/MS2032GAS.webp","27LX6TDGA.ATV":"img/27LX6TDGA.webp","32LX6BDGA.ATV":"img/32LX6BDGA.webp","32U889SA-W.ATV":"img/32U889SA-W.webp"};
+
+const CAT_ORDER = ['Refrigerators','TVs','Air Care','Air Conditioners','Cooking','Audio','Monitors'];
+
+const I18N = {
+  en: {
+    back:'← Back to home', title:'LG Subscribe — Program Details',
+    subtitle:'Current pricing, discounts and gifts for every eligible LG product.',
+    period:'Monthly pricing valid 06/10 – 30/10/2026 · Total paid pricing valid 08/10 – 30/10/2026',
+    tab_all:'All products', results:(n)=> n===1 ? '1 product' : n+' products',
+    list_price:'List price', sub_price:'LG Subscribe price', save:'Save', mo:'/mo',
+    m12:'12 months', m24:'24 months', m36:'36 months',
+    gifts:'Gifts included', evoucher:'E-Voucher', south:'South-region voucher',
+    no_gift:'No additional gift', empty_h:'No products in this category yet', empty_p:'No current promotion for this category.',
+    cats:{'Refrigerators':'Refrigerators','TVs':'TVs','Air Care':'Air Care','Air Conditioners':'Air Conditioners','Cooking':'Cooking','Audio':'Audio','Monitors':'Monitors'}
+  },
+  vi: {
+    back:'← Về trang chủ', title:'LG Subscribe — Chi tiết chương trình',
+    subtitle:'Giá, ưu đãi và quà tặng hiện hành cho từng sản phẩm LG đủ điều kiện.',
+    period:'Giá theo tháng áp dụng 06/10 – 30/10/2026 · Giá trả góp tổng áp dụng 08/10 – 30/10/2026',
+    tab_all:'Tất cả sản phẩm', results:(n)=> n+' sản phẩm',
+    list_price:'Giá niêm yết', sub_price:'Giá LG Subscribe', save:'Tiết kiệm', mo:'/tháng',
+    m12:'12 tháng', m24:'24 tháng', m36:'36 tháng',
+    gifts:'Quà tặng kèm', evoucher:'E-Voucher', south:'Voucher khu vực miền Nam',
+    no_gift:'Không có quà tặng kèm', empty_h:'Chưa có sản phẩm trong danh mục này', empty_p:'Chưa có chương trình khuyến mãi cho danh mục này.',
+    cats:{'Refrigerators':'Tủ lạnh','TVs':'Tivi','Air Care':'Chăm sóc không khí','Air Conditioners':'Máy lạnh','Cooking':'Bếp / Lò vi sóng','Audio':'Âm thanh','Monitors':'Màn hình'}
+  },
+  ko: {
+    back:'← 홈으로', title:'LG Subscribe — 프로그램 상세',
+    subtitle:'모든 대상 LG 제품의 현재 가격, 할인 및 증정품 정보입니다.',
+    period:'월 요금은 2026년 10월 6일 – 10월 30일까지 유효 · 일시불 가격은 2026년 10월 8일 – 10월 30일까지 유효',
+    tab_all:'전체 제품', results:(n)=> n+'개 제품',
+    list_price:'정가', sub_price:'LG Subscribe 가격', save:'절약', mo:'/월',
+    m12:'12개월', m24:'24개월', m36:'36개월',
+    gifts:'포함 증정품', evoucher:'E-바우처', south:'남부 지역 바우처',
+    no_gift:'추가 증정품 없음', empty_h:'아직 이 카테고리에 제품이 없습니다', empty_p:'이 카테고리에는 현재 진행 중인 프로모션이 없습니다.',
+    cats:{'Refrigerators':'냉장고','TVs':'TV','Air Care':'에어케어','Air Conditioners':'에어컨','Cooking':'쿠킹 가전','Audio':'오디오','Monitors':'모니터'}
+  }
+};
+
+let lang = 'en';
+let activeCat = 'all';
+
+function fmt(n){ return '₫' + n.toLocaleString('vi-VN'); }
+
+function setLang(l){
+  lang = l;
+  document.getElementById('btnEN').classList.toggle('active', l==='en');
+  document.getElementById('btnVI').classList.toggle('active', l==='vi');
+  document.getElementById('btnKO').classList.toggle('active', l==='ko');
+  document.getElementById('htmlRoot').lang = l;
+  try{ localStorage.setItem('lg_lang', l); }catch(e){}
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(I18N[lang][key]) el.textContent = I18N[lang][key];
+  });
+  renderTabs();
+  renderGrid();
+}
+
+function renderTabs(){
+  const t = I18N[lang];
+  const tabsEl = document.getElementById('tabs');
+  const cats = ['all', ...CAT_ORDER];
+  tabsEl.innerHTML = cats.map(c => {
+    const label = c === 'all' ? t.tab_all : t.cats[c];
+    const cls = c === activeCat ? 'tab active' : 'tab';
+    return `<button class="${cls}" onclick="selectCat('${c}')">${label}</button>`;
+  }).join('');
+}
+
+function selectCat(c){
+  activeCat = c;
+  renderTabs();
+  renderGrid();
+}
+
+function renderGrid(){
+  const t = I18N[lang];
+  const list = activeCat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === activeCat);
+  const gridEl = document.getElementById('productGrid');
+  const emptyEl = document.getElementById('emptyState');
+  document.getElementById('resultsCount').textContent = t.results(list.length);
+
+  if(list.length === 0){
+    gridEl.style.display = 'none';
+    emptyEl.style.display = 'block';
+    return;
+  }
+  gridEl.style.display = 'grid';
+  emptyEl.style.display = 'none';
+
+  gridEl.innerHTML = list.map(p => {
+    const gifts = [];
+    if(p.evoucher) gifts.push(`${t.evoucher} ${fmt(p.evoucher)}`);
+    if(p.gift1) gifts.push(p.gift1);
+    if(p.gift2) gifts.push(p.gift2);
+    if(p.voucherSouth) gifts.push(`${t.south} ${fmt(p.voucherSouth)}`);
+    const giftHtml = gifts.length
+      ? `<div class="gift-chips">${gifts.map(g=>`<span class="gift-chip">🎁 ${g}</span>`).join('')}</div>`
+      : `<div class="no-gift">${t.no_gift}</div>`;
+    const catLabel = t.cats[p.cat] || p.cat;
+    return `
+      <div class="pcard">
+        ${IMG_MAP[p.model] ? `<div class="pimg"><img src="${IMG_MAP[p.model]}" alt="${p.model}" loading="lazy"></div>` : `<div class="pimg empty"></div>`}
+        <div class="pcard-top">
+          <div>
+            <div class="pcard-cat">${catLabel}</div>
+            <div class="pcard-model">${p.model}</div>
+          </div>
+          ${p.discount ? `<span class="discount-badge">-${p.discount}%</span>` : ''}
+        </div>
+        <div class="price-row">
+          <span class="price-list">${fmt(p.list)}</span>
+          <span class="price-sub">${fmt(p.onetime)}</span>
+        </div>
+        <div class="price-caption">${t.sub_price}</div>
+        <div class="monthly-grid">
+          <div class="monthly-chip"><div class="mc-term">${t.m12}</div><div class="mc-amt">${fmt(p.m12)}${t.mo}</div></div>
+          <div class="monthly-chip"><div class="mc-term">${t.m24}</div><div class="mc-amt">${fmt(p.m24)}${t.mo}</div></div>
+          <div class="monthly-chip"><div class="mc-term">${t.m36}</div><div class="mc-amt">${fmt(p.m36)}${t.mo}</div></div>
+        </div>
+        <div class="gift-label">${t.gifts}</div>
+        ${giftHtml}
+      </div>`;
+  }).join('');
+}
+
+(function init(){
+  const params = new URLSearchParams(window.location.search);
+  const catParam = params.get('cat');
+  if(catParam && (catParam === 'all' || CAT_ORDER.includes(catParam))){
+    activeCat = catParam;
+  }
+  let savedLang = 'en';
+  try{ savedLang = localStorage.getItem('lg_lang') || 'en'; }catch(e){}
+  setLang(savedLang);
+})();
+</script>
+</body>
+</html>

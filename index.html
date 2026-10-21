@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LG STANBYME — Your Screen, Your Way</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --lg-white:#FFFFFF;
+    --lg-red:#A50034;
+    --lg-red-dark:#7C0027;
+    --lg-ink:#17181A;
+    --lg-mist:#F4F4F6;
+    --lg-line:#E5E5E8;
+    --lg-sub:#6B6B70;
+    --lg-red-tint:#FBE9EE;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+    box-sizing:border-box;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; scroll-padding-top:env(safe-area-inset-top,0px);}
+  html,body{height:100%;}
+  body{
+    margin:0; background:var(--lg-white); color:var(--lg-ink);
+    font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.headline{font-family:'Poppins',sans-serif;}
+  img,svg{max-width:100%;}
+  .wide{width:100%; overflow-x:auto;}
+  .container{max-width:1180px; margin:0 auto; padding:0 32px;}
+  section{padding:96px 0;}
+  @media(max-width:640px){ section{padding:64px 0;} .container{padding:0 20px;} }
+
+  /* NAV */
+  nav{
+    position:sticky; top:0; top:env(safe-area-inset-top,0px); z-index:50;
+    background:rgba(255,255,255,.88); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--lg-line);
+  }
+  .nav-row{display:flex; align-items:center; justify-content:space-between; height:76px;}
+  .nav-logo{font-family:'Poppins'; font-weight:700; font-size:22px; letter-spacing:.5px;}
+  .nav-logo span{color:var(--lg-red);}
+  .nav-cta{
+    background:var(--lg-red); color:#fff; border:none; padding:14px 26px;
+    border-radius:999px; font-family:'Inter'; font-weight:600; font-size:15px;
+    cursor:pointer; transition:transform .15s ease, background .2s ease;
+  }
+  .nav-cta:hover{background:var(--lg-red-dark); transform:translateY(-1px);}
+  .lang-toggle{display:flex; background:var(--lg-mist); border-radius:999px; padding:4px; gap:2px;}
+  .lang-btn{border:none; background:transparent; padding:8px 14px; border-radius:999px; font-family:'Inter'; font-weight:600; font-size:13px; cursor:pointer; color:var(--lg-sub); transition:all .15s ease;}
+  .lang-btn.active{background:var(--lg-red); color:#fff;}
+  .nav-logo-img{height:34px; display:block;}
+  .foot-logo-img{height:28px; display:block;}
+
+  /* HERO */
+  .hero{
+    padding:88px 0 64px; text-align:center; position:relative;
+    background:radial-gradient(ellipse at 50% 0%, #fff 0%, var(--lg-mist) 120%);
+  }
+  .eyebrow-pill{
+    display:inline-block; background:var(--lg-red-tint); color:var(--lg-red);
+    font-weight:600; font-size:14px; padding:8px 18px; border-radius:999px; margin-bottom:28px;
+    opacity:0; animation:rise .6s ease forwards;
+  }
+  .hero h1{
+    font-size:clamp(38px,6vw,66px); line-height:1.06; font-weight:700; margin:0 0 22px;
+    opacity:0; animation:rise .7s ease .1s forwards;
+  }
+  .hero h1 .accent{color:var(--lg-red);}
+  .hero p.lede{
+    font-size:clamp(17px,2vw,21px); color:var(--lg-sub); max-width:620px; margin:0 auto 40px;
+    line-height:1.6; opacity:0; animation:rise .7s ease .2s forwards;
+  }
+  .hero-ctas{display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:64px;
+    opacity:0; animation:rise .7s ease .3s forwards;}
+  .btn-primary, .btn-secondary{
+    font-family:'Inter'; font-weight:600; font-size:17px; padding:18px 34px; border-radius:999px;
+    cursor:pointer; transition:transform .15s ease, box-shadow .2s ease, background .2s ease; border:none;
+  }
+  .btn-primary{background:var(--lg-red); color:#fff; box-shadow:0 10px 24px -8px rgba(165,0,52,.5);}
+  .btn-primary:hover{background:var(--lg-red-dark); transform:translateY(-2px);}
+  .btn-secondary{background:#fff; color:var(--lg-ink); border:1.5px solid var(--lg-line);}
+  .btn-secondary:hover{border-color:var(--lg-ink); transform:translateY(-2px);}
+
+  /* Product visual (CSS-drawn STANBYME) */
+  .device-wrap{display:flex; justify-content:center; opacity:0; animation:rise .8s ease .35s forwards;}
+  .subscribe-card{
+    width:min(90vw,420px); background:#fff; border:1px solid var(--lg-line); border-radius:22px;
+    padding:32px 30px; box-shadow:0 30px 60px -30px rgba(0,0,0,.25); text-align:left;
+  }
+  .sc-row{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;}
+  .sc-chip{background:var(--lg-red-tint); color:var(--lg-red); font-size:13px; font-weight:600; padding:6px 14px; border-radius:999px;}
+  .sc-cycle{color:var(--lg-red); font-size:20px;}
+  .sc-amount{font-family:'Poppins'; font-weight:700; font-size:36px; margin-bottom:22px;}
+  .sc-amount span{font-family:'Inter'; font-weight:500; font-size:16px; color:var(--lg-sub);}
+  .sc-line{height:1px; background:var(--lg-line); margin-bottom:20px;}
+  .sc-item{display:flex; justify-content:space-between; gap:16px; margin-bottom:14px; font-size:14.5px;}
+  .sc-item span{color:var(--lg-sub);}
+  .sc-item strong{font-weight:600; text-align:right;}
+
+  /* PRICE LOOKUP */
+  .lookup-card{text-align:left; background:#fff;}
+  .lookup-row{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:18px;}
+  @media(max-width:480px){.lookup-row{grid-template-columns:1fr;}}
+  .lookup-select{
+    width:100%; padding:14px 16px; border-radius:12px; border:1.5px solid var(--lg-line);
+    font-family:'Inter'; font-size:15px; font-weight:500; color:var(--lg-ink); background:#fff;
+    appearance:none; cursor:pointer;
+  }
+  .lookup-select:disabled{opacity:.5; cursor:not-allowed;}
+  .lookup-empty{color:var(--lg-sub); font-size:14.5px; text-align:center; padding:12px 0;}
+  .lookup-result{border-top:1px solid var(--lg-line); padding-top:18px;}
+  .lookup-img{height:150px; margin:0 0 14px; border-radius:14px; background:#fff; border:1px solid var(--lg-line); display:flex; align-items:center; justify-content:center; overflow:hidden;}
+  .lookup-img img{width:100%; height:100%; object-fit:contain; display:block;}
+  .lookup-model{font-family:'Poppins'; font-weight:600; font-size:18px; margin-bottom:4px;}
+  .lookup-onetime{color:var(--lg-sub); font-size:14px; margin-bottom:18px;}
+  .lookup-status{
+    display:inline-block; background:var(--lg-red-tint); color:var(--lg-red); font-size:12.5px;
+    font-weight:600; padding:3px 10px; border-radius:999px; margin-left:8px;
+  }
+  .lookup-plans{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
+  @media(max-width:480px){.lookup-plans{grid-template-columns:1fr;}}
+  .lookup-plan{background:var(--lg-mist); border-radius:14px; padding:16px 14px; text-align:center;}
+  .lookup-plan .lp-term{font-size:13px; color:var(--lg-sub); font-weight:600; margin-bottom:6px;}
+  .lookup-plan .lp-amount{font-family:'Poppins'; font-weight:700; font-size:18px;}
+  .lookup-plan .lp-amount span{font-family:'Inter'; font-weight:500; font-size:12px; color:var(--lg-sub); display:block;}
+  @keyframes rise{from{opacity:0; transform:translateY(16px);} to{opacity:1; transform:translateY(0);}}
+  @media (prefers-reduced-motion: reduce){
+    .eyebrow-pill,.hero h1,.hero p.lede,.hero-ctas,.device-wrap{animation:none; opacity:1;}
+  }
+
+  /* HIGHLIGHTS */
+  .section-head{text-align:center; max-width:640px; margin:0 auto 56px;}
+  .section-head h2{font-size:clamp(28px,3.4vw,40px); font-weight:600; margin:0 0 14px;}
+  .section-head p{color:var(--lg-sub); font-size:17px; line-height:1.6; margin:0;}
+  .grid-highlights{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:22px;
+  }
+  .hi-card{
+    background:#fff; border:1px solid var(--lg-line); border-radius:20px; padding:32px 24px;
+    text-align:center; transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .hi-card:hover{transform:translateY(-4px); box-shadow:0 20px 40px -24px rgba(0,0,0,.25);}
+  .hi-card-link{display:block; text-decoration:none; color:inherit; cursor:pointer;}
+  .hi-icon{
+    width:52px; height:52px; margin:0 auto 18px; border-radius:14px; background:var(--lg-red-tint);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hi-card h3{font-size:17px; font-weight:600; margin:0 0 8px;}
+  .hi-card p{font-size:14.5px; color:var(--lg-sub); margin:0; line-height:1.5;}
+
+  /* SUBSCRIBE */
+  .subscribe{background:var(--lg-ink); color:#fff;}
+  .subscribe .section-head p{color:#c9c9cc;}
+  .subscribe .section-head h2{color:#fff;}
+  .sub-layout{display:grid; grid-template-columns:1.1fr 1fr; gap:48px; align-items:center;}
+  @media(max-width:860px){.sub-layout{grid-template-columns:1fr;}}
+  .price-card{
+    background:linear-gradient(155deg,#fff,#FBE9EE); color:var(--lg-ink); border-radius:24px;
+    padding:40px 36px; text-align:center;
+  }
+  .price-card .tag{font-size:14px; font-weight:600; color:var(--lg-red); margin-bottom:10px;}
+  .price-card .amount{font-size:44px; font-weight:700; font-family:'Poppins'; margin:0 0 4px;}
+  .price-card .period{color:var(--lg-sub); font-size:15px; margin-bottom:26px;}
+  .price-card .btn-primary{width:100%;}
+  .sub-features{list-style:none; padding:0; margin:0 0 32px; display:grid; gap:18px;}
+  .sub-features li{display:flex; gap:14px; font-size:16px; line-height:1.5; color:#e4e4e6;}
+  .sub-features .check{
+    flex:none; width:24px; height:24px; border-radius:50%; background:var(--lg-red);
+    display:flex; align-items:center; justify-content:center; margin-top:2px;
+  }
+
+  /* PROMOTION */
+  .promo{
+    background:var(--lg-red); color:#fff; border-radius:28px; padding:56px 44px;
+    display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap;
+    box-shadow:0 30px 60px -30px rgba(165,0,52,.6);
+  }
+  .promo-left{max-width:560px;}
+  .promo .badge{
+    display:inline-block; background:rgba(255,255,255,.18); padding:7px 16px; border-radius:999px;
+    font-size:13px; font-weight:600; margin-bottom:18px; letter-spacing:.3px;
+  }
+  .promo h2{font-size:clamp(26px,3vw,36px); margin:0 0 12px; font-weight:600;}
+  .promo .promo-value{font-size:clamp(30px,3.6vw,44px); font-weight:700; font-family:'Poppins'; margin:0 0 14px;}
+  .promo p.note{margin:0; opacity:.9; font-size:15px;}
+  .promo .btn-primary{background:#fff; color:var(--lg-red); box-shadow:none;}
+  .promo .btn-primary:hover{background:#f2f2f2;}
+
+  /* STEPS */
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:28px;}
+  @media(max-width:760px){.steps{grid-template-columns:1fr;}}
+  .step{text-align:center; padding:0 12px;}
+  .step .num{
+    width:56px; height:56px; border-radius:50%; border:2px solid var(--lg-red); color:var(--lg-red);
+    display:flex; align-items:center; justify-content:center; font-family:'Poppins'; font-weight:600;
+    font-size:19px; margin:0 auto 20px;
+  }
+  .step h3{font-size:18px; font-weight:600; margin:0 0 8px;}
+  .step p{color:var(--lg-sub); font-size:15px; margin:0; line-height:1.5;}
+  .step-divider{display:flex; align-items:center; justify-content:center; color:var(--lg-line); font-size:22px;}
+
+  /* FINAL CTA */
+  .final-cta{
+    text-align:center; background:var(--lg-mist); border-radius:28px; padding:72px 32px;
+  }
+  .final-cta h2{font-size:clamp(28px,3.6vw,42px); margin:0 0 32px; font-weight:600;}
+  .final-cta .hero-ctas{opacity:1; animation:none; margin-bottom:0;}
+
+  /* FOOTER */
+  footer{background:var(--lg-ink); color:#c9c9cc; padding:56px 0 32px; font-size:14.5px;}
+  .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px; margin-bottom:36px;}
+  .foot-logo{font-family:'Poppins'; font-weight:700; font-size:20px; color:#fff;}
+  .foot-logo span{color:#ff5c85;}
+  .foot-col h4{color:#fff; font-size:14px; font-weight:600; margin:0 0 14px;}
+  .foot-col p, .foot-col a{color:#a9a9ad; text-decoration:none; display:block; margin-bottom:8px; font-size:14px;}
+  .foot-col a:hover{color:#fff;}
+  .foot-bottom{border-top:1px solid #2c2c2e; padding-top:22px; text-align:center; color:#7c7c80; font-size:13px;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-row">
+    <img class="nav-logo-img" src="lg-subscribe-logo.png" alt="LG Subscribe">
+    <div style="display:flex; align-items:center; gap:14px;">
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="btnVI" onclick="setLang('vi')">VI</button>
+        <button class="lang-btn" id="btnKO" onclick="setLang('ko')">KO</button>
+      </div>
+      <button class="nav-cta" data-i18n="nav_cta" onclick="window.location.href='category-details.html?cat=all'">Explore LG Subscribe</button>
+    </div>
+  </div>
+</nav>
+
+<!-- 1. HERO -->
+<header class="hero">
+  <div class="container">
+    <span class="eyebrow-pill" data-i18n="eyebrow">LG Subscribe</span>
+    <h1 data-i18n-html="hero_h1">Own It Monthly, <span class="accent">Live It Fully</span></h1>
+    <p class="lede" data-i18n="hero_lede">Get the LG products you want today, pay a simple monthly amount, and let LG take care of the rest — no large upfront cost, no long-term worry.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" data-i18n="nav_cta" onclick="window.location.href='category-details.html?cat=all'">Explore LG Subscribe</button>
+      <button class="btn-secondary" data-i18n="cta_contact" onclick="window.location.href='tel:18001503'">Contact Sales: 18001503</button>
+    </div>
+    <div class="device-wrap">
+      <div class="subscribe-card">
+        <div class="sc-row">
+          <span class="sc-chip" data-i18n="plan_chip">Monthly plan</span>
+          <span class="sc-cycle">↻</span>
+        </div>
+        <div class="sc-amount"><span data-i18n="from_label">From</span> ₫90.000<span data-i18n="unit_month">/month</span></div>
+        <div class="sc-line"></div>
+        <div class="sc-item"><span data-i18n="label_product">Product</span><strong data-i18n="val_product">Your choice of LG product</strong></div>
+        <div class="sc-item"><span data-i18n="label_period">Period</span><strong data-i18n="val_period">12 / 24 / 36 months</strong></div>
+        <div class="sc-item"><span data-i18n="label_includes">Includes</span><strong>[CARE SERVICE]</strong></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- 2. WHY LG SUBSCRIBE -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <h2 data-i18n="why_h2">Why customers choose LG Subscribe</h2>
+      <p data-i18n="why_p">A simpler way to own the LG products you love.</p>
+    </div>
+    <div class="grid-highlights">
+      <div class="hi-card">
+        <div class="hi-icon">💳</div>
+        <h3 data-i18n="why1_h">Pay Monthly, Own It</h3>
+        <p data-i18n="why1_p">Start using your LG product today with a low, predictable monthly payment.</p>
+      </div>
+      <div class="hi-card">
+        <div class="hi-icon">🗓️</div>
+        <h3 data-i18n="why2_h">Flexible periods</h3>
+        <p data-i18n="why2_p">Choose the subscription length that fits your budget and lifestyle.</p>
+      </div>
+      <div class="hi-card">
+        <div class="hi-icon">🛠️</div>
+        <h3 data-i18n="why3_h">Care included</h3>
+        <p><span data-i18n="why3_p">[CARE SERVICE] keeps your product running smoothly for the life of your plan.</span></p>
+      </div>
+      <div class="hi-card">
+        <div class="hi-icon">🛡️</div>
+        <h3 data-i18n="why4_h">Backed by warranty</h3>
+        <p><span data-i18n="why4_p">Every plan comes with [WARRANTY] for full peace of mind.</span></p>
+      </div>
+      <div class="hi-card">
+        <div class="hi-icon">🔁</div>
+        <h3 data-i18n="why5_h">Works across products</h3>
+        <p data-i18n="why5_p">Apply LG Subscribe to a wide range of eligible LG products, in-store or here at the kiosk.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2b. BROWSE BY CATEGORY (real pricing) -->
+<section style="background:var(--lg-mist);">
+  <div class="container">
+    <div class="section-head">
+      <h2 data-i18n="browse_h2">Every category, one monthly plan</h2>
+      <p data-i18n="browse_p">Starting price shown is for the lowest-priced model in each category on a 36-month plan. Ask staff for pricing on the specific model you want.</p>
+    </div>
+    <div class="grid-highlights">
+      <a class="hi-card hi-card-link" href="category-details.html?cat=all">
+        <div class="hi-icon">🗂️</div>
+        <h3 data-i18n="cat_all">All products</h3>
+        <p data-i18n="cat_all_p">See every category &amp; model →</p>
+      </a>
+      <a class="hi-card hi-card-link" href="category-details.html?cat=Refrigerators">
+        <div class="hi-icon">🧊</div>
+        <h3 data-i18n="cat_refrigerators">Refrigerators</h3>
+        <p><span data-i18n="from_label">From</span> <strong>₫230.000</strong><span data-i18n="unit_month">/month</span></p>
+      </a>
+      <a class="hi-card hi-card-link" href="category-details.html?cat=TVs">
+        <div class="hi-icon">📺</div>
+        <h3 data-i18n="cat_tvs">TVs</h3>
+        <p><span data-i18n="from_label">From</span> <strong>₫330.000</strong><span data-i18n="unit_month">/month</span></p>
+      </a>
+      <a class="hi-card hi-card-link" href="category-details.html?cat=Air%20Care">
+        <div class="hi-icon">🌬️</div>
+        <h3 data-i18n="cat_aircare">Air Care</h3>
+        <p><span data-i18n="from_label">From</span> <strong>₫200.000</strong><span data-i18n="unit_month">/month</span></p>
+      </a>
+      <a class="hi-card hi-card-link" href="category-details.html?cat=Air%20Conditioners">
+        <div class="hi-icon">❄️</div>
+        <h3 data-i18n="cat_ac">Air Conditioners</h3>
+        <p><span data-i18n="from_label">From</span> <strong>₫370.000</strong><span data-i18n="unit_month">/month</span></p>
+      </a>
+      <a class="hi-card hi-card-link" href="category-details.html?cat=Cooking">
+        <div class="hi-icon">🍽️</div>
+        <h3 data-i18n="cat_cooking">Cooking</h3>
+        <p><span data-i18n="from_label">From</span> <strong>₫90.000</strong><span data-i18n="unit_month">/month</span></p>
+      </a>
+      <a class="hi-card hi-card-link" href="category-details.html?cat=Audio">
+        <div class="hi-icon">🔊</div>
+        <h3 data-i18n="cat_audio">Audio</h3>
+        <p><span data-i18n="from_label">From</span> <strong>₫180.000</strong><span data-i18n="unit_month">/month</span></p>
+      </a>
+      <a class="hi-card hi-card-link" href="category-details.html?cat=Monitors">
+        <div class="hi-icon">🖥️</div>
+        <h3 data-i18n="cat_monitors">Monitors</h3>
+        <p><span data-i18n="from_label">From</span> <strong>₫850.000</strong><span data-i18n="unit_month">/month</span></p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 3. LG SUBSCRIBE OFFER -->
+<section class="subscribe" id="subscribe">
+  <div class="container">
+    <div class="section-head">
+      <h2 data-i18n="how_h2">How LG Subscribe works</h2>
+      <p data-i18n="how_p">One monthly plan covers your product and the care that comes with it — available on eligible LG products, including the display you're viewing this on.</p>
+    </div>
+    <div class="sub-layout">
+      <ul class="sub-features">
+        <li><span class="check">✓</span> <span data-i18n="feat1">Simple monthly payment — no large upfront cost</span></li>
+        <li><span class="check">✓</span> <span data-i18n="feat2">Choose a subscription period that fits you: [SUBSCRIPTION PERIOD]</span></li>
+        <li><span class="check">✓</span> <span data-i18n="feat3">Includes [CARE SERVICE] for peace of mind</span></li>
+        <li><span class="check">✓</span> <span data-i18n="feat4">Backed by [WARRANTY]</span></li>
+        <li><span class="check">✓</span> <span data-i18n="feat5">Plus [OTHER BENEFIT]</span></li>
+        <li><span class="check">✓</span> <span data-i18n="feat6">Guided registration with our on-site LG team</span></li>
+      </ul>
+    </div>
+    <div style="max-width:520px;margin:40px auto 0;">
+      <div class="price-card lookup-card">
+        <div class="tag" style="margin-bottom:16px;" data-i18n="lookup_tag">Find your exact plan</div>
+        <div class="lookup-row">
+          <select id="catSelect" class="lookup-select"><option value="" data-i18n="lookup_choose_cat">1. Choose category</option></select>
+          <select id="modelSelect" class="lookup-select" disabled><option value="" data-i18n="lookup_choose_model">2. Choose model</option></select>
+        </div>
+        <div id="lookupResult" class="lookup-result" style="display:none;"></div>
+        <div id="lookupEmpty" class="lookup-empty" data-i18n="lookup_empty">Select a category and model to see the 12 / 24 / 36-month price.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. PROMOTION -->
+<section id="promo">
+  <div class="container">
+    <div class="promo">
+      <div class="promo-left">
+        <span class="badge" data-i18n="promo_badge">Special Offer</span>
+        <h2 data-i18n="promo_h2">Air Care Offer — Southern Region</h2>
+        <div class="promo-value" data-i18n="promo_value">Gift voucher up to ₫1,500,000</div>
+        <p class="note" data-i18n="promo_note">On eligible Air Care purifiers purchased in the Southern region · Valid 06/10 – 30/10/2026</p>
+      </div>
+      <a class="btn-primary" style="text-decoration:none; display:inline-block;" data-i18n="promo_cta" href="category-details.html?cat=Air%20Care">View Air Care Offers</a>
+    </div>
+  </div>
+</section>
+
+<!-- 5. HOW TO GET LG SUBSCRIBE -->
+<section style="background:var(--lg-mist);">
+  <div class="container">
+    <div class="section-head">
+      <h2 data-i18n="steps_h2">How to get LG Subscribe</h2>
+      <p data-i18n="steps_p">Three simple steps with help from our on-site team.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="num">01</div><h3 data-i18n="step1_h">Choose your LG product</h3><p data-i18n="step1_p">Pick any eligible LG product available at this kiosk.</p></div>
+      <div class="step"><div class="num">02</div><h3 data-i18n="step2_h">Select LG Subscribe</h3><p data-i18n="step2_p">Choose the subscription plan and period that suits your needs.</p></div>
+      <div class="step"><div class="num">03</div><h3 data-i18n="step3_h">Complete registration</h3><p data-i18n="step3_p">Our staff completes your registration and you enjoy your product right away.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. FINAL CTA -->
+<section>
+  <div class="container">
+    <div class="final-cta">
+      <h2 data-i18n="final_h2">Ready to start your LG Subscribe plan?</h2>
+      <div class="hero-ctas">
+        <button class="btn-primary" data-i18n="cta_register" onclick="document.getElementById('footer').scrollIntoView()">Register Now</button>
+        <button class="btn-secondary" data-i18n="cta_talk" onclick="window.location.href='tel:18001503'">Talk to Our Sales Team: 18001503</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. FOOTER -->
+<footer id="footer">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <img class="foot-logo-img" src="lg-subscribe-logo.png" alt="LG Subscribe">
+      </div>
+      <div class="foot-col">
+        <h4>LG Subscribe</h4>
+        <a href="#subscribe" data-i18n="foot_link1">Plans &amp; pricing</a>
+        <a href="#promo" data-i18n="foot_link2">Current offer</a>
+      </div>
+      <div class="foot-col">
+        <h4 data-i18n="foot_support_h">Support</h4>
+        <p data-i18n="foot_support_p1">Ask a staff member at this kiosk</p>
+        <p><span data-i18n="foot_care_label">Customer care:</span> 18001503</p>
+        <p>lgsubscribe03@gmail.com</p>
+      </div>
+      <div class="foot-col">
+        <h4 data-i18n="foot_legal_h">Legal</h4>
+        <a href="#" data-i18n="foot_terms">Terms &amp; Conditions</a>
+        <a href="#" data-i18n="foot_privacy">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="foot-bottom" data-i18n="foot_bottom">© 2026 LG Electronics. All rights reserved. · Displayed on LG STANBYME at this kiosk.</div>
+  </div>
+</footer>
+
+<script>
+// LG Subscribe product catalog snapshot — October 2026 promotion pricing (Miniapp_Total_promotion_Q4)
+// Washing Machines temporarily removed: no current promotion, business paused, to be updated later.
+// c=category, m=model, ot=LG Subscribe one-time price, m12/m24/m36=monthly price at that term
+const LG_PRODUCTS = [{"c":"Air Care","m":"AS10GDWH0.ABAE","ot":20917000,"m12":1810000,"m24":1060000,"m36":810000},{"c":"Air Care","m":"AS65GDWH0.ABAE","ot":15293000,"m12":1320000,"m24":770000,"m36":590000},{"c":"Air Care","m":"AS20GPBK0.ABAE","ot":9225000,"m12":800000,"m24":490000,"m36":390000},{"c":"Air Care","m":"AS20GPWU0.ABAE","ot":9225000,"m12":800000,"m24":490000,"m36":390000},{"c":"Air Care","m":"AS20GSHU0.ABAE","ot":11410000,"m12":990000,"m24":590000,"m36":460000},{"c":"Air Care","m":"FS15GPBK0.ABAE","ot":9600000,"m12":830000,"m24":510000,"m36":400000},{"c":"Air Care","m":"AS30GGW1A.ABAE","ot":4195000,"m12":370000,"m24":240000,"m36":200000},{"c":"Air Care","m":"AS30GGG1A.ABAE","ot":4195000,"m12":370000,"m24":240000,"m36":200000},{"c":"Air Care","m":"AS10GDBY0.ABAE","ot":22673000,"m12":1960000,"m24":1140000,"m36":870000},{"c":"Air Care","m":"AS65GDBY0.ABAE","ot":17359000,"m12":1500000,"m24":900000,"m36":700000},{"c":"Air Care","m":"AS55GGSY0.ABAE","ot":15270800,"m12":1320000,"m24":810000,"m36":640000},{"c":"Air Care","m":"AS60GHWG0.ABAE","ot":5327800,"m12":460000,"m24":300000,"m36":240000},{"c":"Air Care","m":"MD16GQSE0.ABAE","ot":8856500,"m12":770000,"m24":440000,"m36":320000},{"c":"Air Care","m":"MD19GQGE0.ABAE","ot":9354700,"m12":810000,"m24":460000,"m36":340000},{"c":"Air Care","m":"W60GLGG0.ABAE","ot":9350000,"m12":810000,"m24":490000,"m36":380000},{"c":"Refrigerators","m":"LBB33BLGA.ABMPEVN","ot":14350000,"m12":1240000,"m24":670000,"m36":480000},{"c":"Refrigerators","m":"LBB33BLM.AEPPEVN","ot":10200000,"m12":890000,"m24":490000,"m36":350000},{"c":"Refrigerators","m":"LBB33BGMAI.ABEPEVN","ot":17910000,"m12":1550000,"m24":840000,"m36":610000},{"c":"Refrigerators","m":"LFD61BLGAI.ABMPEVN","ot":36750100,"m12":3180000,"m24":1700000,"m36":1210000},{"c":"Refrigerators","m":"LFD58BLMAI.AEPPEVN","ot":31280100,"m12":2700000,"m24":1440000,"m36":1020000},{"c":"Refrigerators","m":"F61BMD.AEPPEVN","ot":25470000,"m12":2200000,"m24":1180000,"m36":840000},{"c":"Refrigerators","m":"F58BGD.ABMPEVN","ot":25470000,"m12":2200000,"m24":1180000,"m36":840000},{"c":"Refrigerators","m":"LFB58BLMA.AEPPEVN","ot":22470000,"m12":1940000,"m24":1050000,"m36":750000},{"c":"Refrigerators","m":"F51EG.ADMPEVN","ot":21470000,"m12":1860000,"m24":1010000,"m36":720000},{"c":"Refrigerators","m":"F50BG.ADBPEVN","ot":15350000,"m12":1330000,"m24":720000,"m36":510000},{"c":"Refrigerators","m":"GR-X257BG.AEEPEVN","ot":36750100,"m12":3180000,"m24":1700000,"m36":1210000},{"c":"Refrigerators","m":"LSI63BLMA.AEPPEVN","ot":24470000,"m12":2120000,"m24":1140000,"m36":810000},{"c":"Refrigerators","m":"T33SV.APYPEVN","ot":7940000,"m12":690000,"m24":380000,"m36":270000},{"c":"Refrigerators","m":"T30SV.APYPEVN","ot":7440000,"m12":650000,"m24":360000,"m36":260000},{"c":"Refrigerators","m":"T26BG.AGKPEVN","ot":7050000,"m12":610000,"m24":340000,"m36":250000},{"c":"Refrigerators","m":"T21BG.AGKPEVN","ot":6650000,"m12":580000,"m24":320000,"m36":230000},{"c":"TVs","m":"86MRGB86BSA.ATV","ot":85170000,"m12":7350000,"m24":3970000,"m36":2840000},{"c":"TVs","m":"75MRGB86BSA.ATV","ot":59900000,"m12":5170000,"m24":2840000,"m36":2070000},{"c":"TVs","m":"65MRGB86BSA.ATV","ot":35560000,"m12":3070000,"m24":1670000,"m36":1190000},{"c":"TVs","m":"OLED83W6PSA.ATV","ot":201300000,"m12":17370000,"m24":9160000,"m36":6390000},{"c":"TVs","m":"OLED77G6PSA.ATV","ot":99250000,"m12":8570000,"m24":4600000,"m36":3260000},{"c":"TVs","m":"OLED65G6PSA.ATV","ot":55860000,"m12":4820000,"m24":2660000,"m36":1940000},{"c":"TVs","m":"OLED55G6PSA.ATV","ot":49680000,"m12":4290000,"m24":2300000,"m36":1620000},{"c":"TVs","m":"OLED83C6PSA.ATV","ot":90150000,"m12":7780000,"m24":4190000,"m36":2990000},{"c":"TVs","m":"OLED77C6PSA.ATV","ot":75150000,"m12":6490000,"m24":3530000,"m36":2540000},{"c":"TVs","m":"OLED65C6PSA.ATV","ot":42680000,"m12":3690000,"m24":1990000,"m36":1410000},{"c":"TVs","m":"OLED55C6PSA.ATV","ot":31560000,"m12":2730000,"m24":1490000,"m36":1070000},{"c":"TVs","m":"OLED77B6PSA.ATV","ot":59900000,"m12":5170000,"m24":2840000,"m36":2070000},{"c":"TVs","m":"OLED65B6PSA.ATV","ot":32650000,"m12":2820000,"m24":1540000,"m36":1110000},{"c":"TVs","m":"OLED55B6PSA.ATV","ot":24530000,"m12":2120000,"m24":1160000,"m36":830000},{"c":"TVs","m":"100QNED86BS.ATV","ot":90270000,"m12":7790000,"m24":4200000,"m36":2990000},{"c":"TVs","m":"86QNED86BSA.ATV","ot":44740000,"m12":3870000,"m24":2080000,"m36":1480000},{"c":"TVs","m":"75QNED86BSA.ATV","ot":30540000,"m12":2640000,"m24":1430000,"m36":1020000},{"c":"TVs","m":"65QNED86BSA.ATV","ot":23440000,"m12":2030000,"m24":1110000,"m36":800000},{"c":"TVs","m":"55QNED86BSA.ATV","ot":17380000,"m12":1500000,"m24":820000,"m36":590000},{"c":"TVs","m":"85QNED80BSA.ATV","ot":31620000,"m12":2730000,"m24":1490000,"m36":1080000},{"c":"TVs","m":"75QNED80BSA.ATV","ot":22480000,"m12":1940000,"m24":1070000,"m36":780000},{"c":"TVs","m":"65QNED80BSA.ATV","ot":17380000,"m12":1500000,"m24":840000,"m36":620000},{"c":"TVs","m":"55QNED80BSA.ATV","ot":13820000,"m12":1200000,"m24":660000,"m36":480000},{"c":"TVs","m":"50QNED80BSA.ATV","ot":14785000,"m12":1280000,"m24":700000,"m36":510000},{"c":"TVs","m":"43QNED80BSA.ATV","ot":12285000,"m12":1060000,"m24":590000,"m36":430000},{"c":"TVs","m":"98NU855BPSB.ATVQ","ot":40670000,"m12":3510000,"m24":1900000,"m36":1350000},{"c":"TVs","m":"85NU855BPSA.ATV","ot":27560000,"m12":2380000,"m24":1300000,"m36":930000},{"c":"TVs","m":"75NU855BPSA.ATV","ot":19420000,"m12":1680000,"m24":930000,"m36":680000},{"c":"TVs","m":"65NU855BPSA.ATV","ot":14320000,"m12":1240000,"m24":680000,"m36":500000},{"c":"TVs","m":"55NU855BPSA.ATV","ot":12320000,"m12":1070000,"m24":590000,"m36":440000},{"c":"TVs","m":"50NU855BPSA.ATV","ot":10785000,"m12":940000,"m24":530000,"m36":390000},{"c":"TVs","m":"43NU855BPSA.ATV","ot":9225000,"m12":800000,"m24":450000,"m36":330000},{"c":"Air Conditioners","m":"IDC09M2.ATYGEVH","ot":10804100,"m12":940000,"m24":510000,"m36":370000},{"c":"Air Conditioners","m":"IDC12M2.ATYGEVH","ot":12388100,"m12":1070000,"m24":580000,"m36":420000},{"c":"Air Conditioners","m":"IDC18M2.ATYGEVH","ot":20552100,"m12":1780000,"m24":960000,"m36":690000},{"c":"Air Conditioners","m":"IDH09M1.ATYGEVH","ot":13378100,"m12":1160000,"m24":630000,"m36":450000},{"c":"Air Conditioners","m":"IDH12M1.ATYGEVH","ot":16309100,"m12":1410000,"m24":760000,"m36":540000},{"c":"Air Conditioners","m":"IDH18M1.ATYGEVH","ot":26453100,"m12":2290000,"m24":1230000,"m36":870000},{"c":"Air Conditioners","m":"IDH24M1.ATYGEVH","ot":34730100,"m12":3000000,"m24":1600000,"m36":1120000},{"c":"Refrigerators","m":"LDT14BGA3.ANBPEVN","ot":20628100,"m12":1780000,"m24":1020000,"m36":760000},{"c":"Refrigerators","m":"LDT14BLA4.ABMPEVN","ot":17988000,"m12":1560000,"m24":900000,"m36":680000},{"c":"Refrigerators","m":"LDT14SVA4.APYPEVN","ot":16988000,"m12":1470000,"m24":850000,"m36":650000},{"c":"Refrigerators","m":"LDN14BLA5.ABMPEVN","ot":15988000,"m12":1380000,"m24":790000,"m36":600000},{"c":"Cooking","m":"MS2535GIK.BSEPLVN","ot":3527500,"m12":310000,"m24":180000,"m36":140000},{"c":"Cooking","m":"MS3032JAS.BBKPLVN","ot":3027500,"m12":270000,"m24":160000,"m36":130000},{"c":"Cooking","m":"MS2032GIK.BSEPLVN","ot":2427500,"m12":210000,"m24":130000,"m36":100000},{"c":"Cooking","m":"MS2032GAS.BBKPLVN","ot":2192500,"m12":190000,"m24":120000,"m36":90000},{"c":"Audio","m":"S95AR.DVNMLLK","ot":16370000,"m12":1420000,"m24":790000,"m36":590000},{"c":"Audio","m":"SG10TY.DVNMLLK","ot":8368000,"m12":730000,"m24":420000,"m36":320000},{"c":"Audio","m":"STAGE301.AVNMLBK","ot":4700000,"m12":410000,"m24":240000,"m36":180000},{"c":"Audio","m":"STAGE501.AVNMLBK","ot":8750000,"m12":760000,"m24":430000,"m36":320000},{"c":"TVs","m":"27LX6TDGA.ATV","ot":20380000,"m12":1760000,"m24":970000,"m36":710000},{"c":"TVs","m":"32LX6BDGA.ATV","ot":25440000,"m12":2200000,"m24":1200000,"m36":860000},{"c":"Monitors","m":"32U889SA-W.ATV","ot":25040000,"m12":2170000,"m24":1180000,"m36":850000}];
+
+function fmtVND(n){ return '₫' + n.toLocaleString('vi-VN'); }
+
+const IMG_MAP = {"STAGE301.AVNMLBK":"img/STAGE301.webp","STAGE501.AVNMLBK":"img/STAGE501.webp","SG10TY.DVNMLLK":"img/SG10TY.webp","S95AR.DVNMLLK":"img/S95AR.webp","AS10GDWH0.ABAE":"img/AS10GDWH0.webp","AS65GDWH0.ABAE":"img/AS65GDWH0.webp","AS20GPBK0.ABAE":"img/AS20GPBK0.webp","AS20GPWU0.ABAE":"img/AS20GPWU0.webp","AS20GSHU0.ABAE":"img/AS20GSHU0.webp","FS15GPBK0.ABAE":"img/FS15GPBK0.webp","AS30GGW1A.ABAE":"img/AS30GGW1A.webp","AS30GGG1A.ABAE":"img/AS30GGG1A.webp","AS10GDBY0.ABAE":"img/AS10GDBY0.webp","AS65GDBY0.ABAE":"img/AS65GDBY0.webp","AS55GGSY0.ABAE":"img/AS55GGSY0.webp","AS60GHWG0.ABAE":"img/AS60GHWG0.webp","MD16GQSE0.ABAE":"img/MD16GQSE0.webp","MD19GQGE0.ABAE":"img/MD19GQGE0.webp","W60GLGG0.ABAE":"img/W60GLGG0.webp","LBB33BLGA.ABMPEVN":"img/LBB33BLGA.webp","LBB33BLM.AEPPEVN":"img/LBB33BLM.webp","LBB33BGMAI.ABEPEVN":"img/LBB33BGMAI.webp","LFD61BLGAI.ABMPEVN":"img/LFD61BLGAI.webp","LFD58BLMAI.AEPPEVN":"img/LFD58BLMAI.webp","F61BMD.AEPPEVN":"img/F61BMD.webp","F58BGD.ABMPEVN":"img/F58BGD.webp","LFB58BLMA.AEPPEVN":"img/LFB58BLMA.webp","F51EG.ADMPEVN":"img/F51EG.webp","F50BG.ADBPEVN":"img/F50BG.webp","GR-X257BG.AEEPEVN":"img/GR-X257BG.webp","LSI63BLMA.AEPPEVN":"img/LSI63BLMA.webp","T33SV.APYPEVN":"img/T33SV.webp","T30SV.APYPEVN":"img/T30SV.webp","T26BG.AGKPEVN":"img/T26BG.webp","T21BG.AGKPEVN":"img/T21BG.webp","86MRGB86BSA.ATV":"img/tv-MRG.webp","75MRGB86BSA.ATV":"img/tv-MRG.webp","65MRGB86BSA.ATV":"img/tv-MRG.webp","OLED83W6PSA.ATV":"img/tv-OLED.webp","OLED77G6PSA.ATV":"img/tv-OLED.webp","OLED65G6PSA.ATV":"img/tv-OLED.webp","OLED55G6PSA.ATV":"img/tv-OLED.webp","OLED83C6PSA.ATV":"img/tv-OLED.webp","OLED77C6PSA.ATV":"img/tv-OLED.webp","OLED65C6PSA.ATV":"img/tv-OLED.webp","OLED55C6PSA.ATV":"img/tv-OLED.webp","OLED77B6PSA.ATV":"img/tv-OLED.webp","OLED65B6PSA.ATV":"img/tv-OLED.webp","OLED55B6PSA.ATV":"img/tv-OLED.webp","100QNED86BS.ATV":"img/100QNED86BS.webp","86QNED86BSA.ATV":"img/tv-QNED.webp","75QNED86BSA.ATV":"img/tv-QNED.webp","65QNED86BSA.ATV":"img/tv-QNED.webp","55QNED86BSA.ATV":"img/tv-QNED.webp","85QNED80BSA.ATV":"img/tv-QNED.webp","75QNED80BSA.ATV":"img/tv-QNED.webp","65QNED80BSA.ATV":"img/tv-QNED.webp","55QNED80BSA.ATV":"img/tv-QNED.webp","50QNED80BSA.ATV":"img/tv-QNED.webp","43QNED80BSA.ATV":"img/tv-QNED.webp","98NU855BPSB.ATVQ":"img/tv-NU.webp","85NU855BPSA.ATV":"img/tv-NU.webp","75NU855BPSA.ATV":"img/tv-NU.webp","65NU855BPSA.ATV":"img/tv-NU.webp","55NU855BPSA.ATV":"img/tv-NU.webp","50NU855BPSA.ATV":"img/tv-NU.webp","43NU855BPSA.ATV":"img/tv-NU.webp","IDC09M2.ATYGEVH":"img/ac-idc-idh.webp","IDC12M2.ATYGEVH":"img/ac-idc-idh.webp","IDC18M2.ATYGEVH":"img/ac-idc-idh.webp","IDH09M1.ATYGEVH":"img/ac-idc-idh.webp","IDH12M1.ATYGEVH":"img/ac-idc-idh.webp","IDH18M1.ATYGEVH":"img/ac-idc-idh.webp","IDH24M1.ATYGEVH":"img/ac-idc-idh.webp","LDT14BGA3.ANBPEVN":"img/LDT14BGA3.webp","LDT14BLA4.ABMPEVN":"img/LDT14BLA4.webp","LDT14SVA4.APYPEVN":"img/LDT14SVA4.webp","LDN14BLA5.ABMPEVN":"img/LDN14BLA5.webp","MS2535GIK.BSEPLVN":"img/MS2535GIK.webp","MS3032JAS.BBKPLVN":"img/MS3032JAS.webp","MS2032GIK.BSEPLVN":"img/MS2032GIK.webp","MS2032GAS.BBKPLVN":"img/MS2032GAS.webp","27LX6TDGA.ATV":"img/27LX6TDGA.webp","32LX6BDGA.ATV":"img/32LX6BDGA.webp","32U889SA-W.ATV":"img/32U889SA-W.webp"};
+
+const CAT_LABELS = {
+  en: {'Refrigerators':'Refrigerators','TVs':'TVs','Air Care':'Air Care','Air Conditioners':'Air Conditioners','Cooking':'Cooking','Audio':'Audio','Monitors':'Monitors'},
+  vi: {'Refrigerators':'Tủ lạnh','TVs':'Tivi','Air Care':'Chăm sóc không khí','Air Conditioners':'Máy lạnh','Cooking':'Bếp / Lò vi sóng','Audio':'Âm thanh','Monitors':'Màn hình'},
+  ko: {'Refrigerators':'냉장고','TVs':'TV','Air Care':'에어케어','Air Conditioners':'에어컨','Cooking':'쿠킹 가전','Audio':'오디오','Monitors':'모니터'}
+};
+
+const I18N = {
+  en: {
+    nav_cta:'Explore LG Subscribe', cta_contact:'Contact Sales: 18001503', eyebrow:'LG Subscribe',
+    hero_h1:'Own It Monthly, <span class="accent">Live It Fully</span>',
+    hero_lede:'Get the LG products you want today, pay a simple monthly amount, and let LG take care of the rest — no large upfront cost, no long-term worry.',
+    from_label:'From', unit_month:'/month',
+    label_product:'Product', label_period:'Period', label_includes:'Includes',
+    val_product:'Your choice of LG product', val_period:'12 / 24 / 36 months',
+    why_h2:'Why customers choose LG Subscribe', why_p:'A simpler way to own the LG products you love.',
+    why1_h:'Pay Monthly, Own It', why1_p:'Start using your LG product today with a low, predictable monthly payment.',
+    why2_h:'Flexible periods', why2_p:'Choose the subscription length that fits your budget and lifestyle.',
+    why3_h:'Care included', why3_p:'[CARE SERVICE] keeps your product running smoothly for the life of your plan.',
+    why4_h:'Backed by warranty', why4_p:'Every plan comes with [WARRANTY] for full peace of mind.',
+    why5_h:'Works across products', why5_p:'Apply LG Subscribe to a wide range of eligible LG products, in-store or here at the kiosk.',
+    browse_h2:'Every category, one monthly plan',
+    browse_p:'Starting price shown is for the lowest-priced model in each category on a 36-month plan. Ask staff for pricing on the specific model you want.',
+    cat_all:'All products', cat_all_p:'See every category & model →',
+    cat_refrigerators:'Refrigerators', cat_tvs:'TVs', cat_aircare:'Air Care', cat_ac:'Air Conditioners',
+    cat_cooking:'Cooking', cat_audio:'Audio', cat_monitors:'Monitors',
+    how_h2:'How LG Subscribe works',
+    how_p:"One monthly plan covers your product and the care that comes with it — available on eligible LG products, including the display you're viewing this on.",
+    feat1:'Simple monthly payment — no large upfront cost',
+    feat2:'Choose a subscription period that fits you: [SUBSCRIPTION PERIOD]',
+    feat3:'Includes [CARE SERVICE] for peace of mind',
+    feat4:'Backed by [WARRANTY]',
+    feat5:'Plus [OTHER BENEFIT]',
+    feat6:'Guided registration with our on-site LG team',
+    lookup_tag:'Find your exact plan', lookup_choose_cat:'1. Choose category', lookup_choose_model:'2. Choose model',
+    lookup_empty:'Select a category and model to see the 12 / 24 / 36-month price.',
+    lookup_price_label:'LG Subscribe price:', lookup_m12:'12 months', lookup_m24:'24 months', lookup_m36:'36 months',
+    promo_badge:'Special Offer', promo_h2:'Air Care Offer — Southern Region',
+    promo_value:'Gift voucher up to ₫1,500,000',
+    promo_note:'On eligible Air Care purifiers purchased in the Southern region · Valid 06/10 – 30/10/2026',
+    promo_cta:'View Air Care Offers',
+    steps_h2:'How to get LG Subscribe', steps_p:'Three simple steps with help from our on-site team.',
+    step1_h:'Choose your LG product', step1_p:'Pick any eligible LG product available at this kiosk.',
+    step2_h:'Select LG Subscribe', step2_p:'Choose the subscription plan and period that suits your needs.',
+    step3_h:'Complete registration', step3_p:'Our staff completes your registration and you enjoy your product right away.',
+    final_h2:'Ready to start your LG Subscribe plan?', cta_register:'Register Now', cta_talk:'Talk to Our Sales Team: 18001503',
+    foot_support_h:'Support', foot_support_p1:'Ask a staff member at this kiosk', foot_care_label:'Customer care:',
+    foot_legal_h:'Legal', foot_terms:'Terms & Conditions', foot_privacy:'Privacy Policy',
+    foot_link1:'Plans & pricing', foot_link2:'Current offer',
+    foot_bottom:'© 2026 LG Electronics. All rights reserved. · Displayed on LG STANBYME at this kiosk.'
+  },
+  vi: {
+    nav_cta:'Khám phá LG Subscribe', cta_contact:'Liên hệ tư vấn: 18001503', eyebrow:'LG Subscribe',
+    hero_h1:'Sở Hữu Theo Tháng, <span class="accent">Sống Trọn Từng Ngày</span>',
+    hero_lede:'Sở hữu ngay sản phẩm LG bạn yêu thích, chỉ cần trả một khoản cố định hàng tháng — không cần trả trước số tiền lớn, không lo về lâu dài.',
+    from_label:'Từ', unit_month:'/tháng',
+    label_product:'Sản phẩm', label_period:'Kỳ hạn', label_includes:'Bao gồm',
+    val_product:'Sản phẩm LG bạn chọn', val_period:'12 / 24 / 36 tháng',
+    why_h2:'Vì sao khách hàng chọn LG Subscribe',
+    why_p:'Cách đơn giản hơn để sở hữu sản phẩm LG bạn yêu thích.',
+    why1_h:'Trả hàng tháng, sở hữu ngay',
+    why1_p:'Sử dụng sản phẩm LG ngay hôm nay với khoản thanh toán hàng tháng thấp và cố định.',
+    why2_h:'Kỳ hạn linh hoạt',
+    why2_p:'Chọn kỳ hạn đăng ký phù hợp với ngân sách và lối sống của bạn.',
+    why3_h:'Bao gồm dịch vụ chăm sóc',
+    why3_p:'[CARE SERVICE] giúp sản phẩm của bạn vận hành trơn tru trong suốt thời gian đăng ký.',
+    why4_h:'Được bảo hành',
+    why4_p:'Mọi gói đăng ký đều đi kèm [WARRANTY] để bạn hoàn toàn yên tâm.',
+    why5_h:'Áp dụng cho nhiều sản phẩm',
+    why5_p:'Áp dụng LG Subscribe cho nhiều sản phẩm LG đủ điều kiện, tại cửa hàng hoặc ngay tại kiosk này.',
+    browse_h2:'Mọi danh mục, một khoản trả hàng tháng',
+    browse_p:'Giá khởi điểm hiển thị là giá thấp nhất trong từng danh mục với kỳ hạn 36 tháng. Hỏi nhân viên để biết giá chi tiết cho sản phẩm bạn muốn.',
+    cat_all:'Tất cả sản phẩm', cat_all_p:'Xem tất cả danh mục & sản phẩm →',
+    cat_refrigerators:'Tủ lạnh', cat_tvs:'Tivi', cat_aircare:'Chăm sóc không khí', cat_ac:'Máy lạnh',
+    cat_cooking:'Bếp / Lò vi sóng', cat_audio:'Âm thanh', cat_monitors:'Màn hình',
+    how_h2:'LG Subscribe hoạt động như thế nào',
+    how_p:'Một khoản trả hàng tháng bao gồm sản phẩm và dịch vụ chăm sóc đi kèm — áp dụng cho các sản phẩm LG đủ điều kiện, kể cả màn hình bạn đang xem.',
+    feat1:'Thanh toán hàng tháng đơn giản — không cần trả trước số tiền lớn',
+    feat2:'Chọn kỳ hạn đăng ký phù hợp với bạn: [SUBSCRIPTION PERIOD]',
+    feat3:'Bao gồm [CARE SERVICE] để bạn an tâm',
+    feat4:'Được bảo vệ bởi [WARRANTY]',
+    feat5:'Cùng với [OTHER BENEFIT]',
+    feat6:'Được đội ngũ LG tại chỗ hướng dẫn đăng ký',
+    lookup_tag:'Tìm gói chính xác của bạn', lookup_choose_cat:'1. Chọn danh mục', lookup_choose_model:'2. Chọn sản phẩm',
+    lookup_empty:'Chọn danh mục và sản phẩm để xem giá theo kỳ hạn 12 / 24 / 36 tháng.',
+    lookup_price_label:'Giá LG Subscribe:', lookup_m12:'12 tháng', lookup_m24:'24 tháng', lookup_m36:'36 tháng',
+    promo_badge:'Ưu đãi đặc biệt', promo_h2:'Ưu đãi Chăm sóc không khí — Khu vực miền Nam',
+    promo_value:'Phiếu quà tặng lên đến ₫1.500.000',
+    promo_note:'Áp dụng cho máy lọc không khí Air Care mua tại khu vực miền Nam · Có hiệu lực 06/10 – 30/10/2026',
+    promo_cta:'Xem ưu đãi Air Care',
+    steps_h2:'Cách đăng ký LG Subscribe', steps_p:'Ba bước đơn giản với sự hỗ trợ từ đội ngũ tại chỗ.',
+    step1_h:'Chọn sản phẩm LG', step1_p:'Chọn bất kỳ sản phẩm LG đủ điều kiện tại kiosk này.',
+    step2_h:'Chọn LG Subscribe', step2_p:'Chọn gói đăng ký và kỳ hạn phù hợp với nhu cầu của bạn.',
+    step3_h:'Hoàn tất đăng ký', step3_p:'Nhân viên hoàn tất đăng ký và bạn sử dụng sản phẩm ngay.',
+    final_h2:'Sẵn sàng bắt đầu gói LG Subscribe?', cta_register:'Đăng ký ngay', cta_talk:'Trò chuyện với nhân viên tư vấn: 18001503',
+    foot_support_h:'Hỗ trợ', foot_support_p1:'Hỏi nhân viên tại kiosk này', foot_care_label:'Chăm sóc khách hàng:',
+    foot_legal_h:'Pháp lý', foot_terms:'Điều khoản & Điều kiện', foot_privacy:'Chính sách bảo mật',
+    foot_link1:'Gói & giá', foot_link2:'Ưu đãi hiện tại',
+    foot_bottom:'© 2026 LG Electronics. Bảo lưu mọi quyền. · Hiển thị trên LG STANBYME tại kiosk này.'
+  },
+  ko: {
+    nav_cta:'LG Subscribe 살펴보기', cta_contact:'영업팀 문의: 18001503', eyebrow:'LG Subscribe',
+    hero_h1:'매달 소유하고, <span class="accent">온전히 누리세요</span>',
+    hero_lede:'지금 원하는 LG 제품을 만나보고, 간편한 월 정액 요금만 내세요. 나머지는 LG가 책임집니다 — 큰 초기 비용 없이, 장기적인 걱정 없이.',
+    from_label:'최소', unit_month:'/월',
+    label_product:'제품', label_period:'기간', label_includes:'포함 사항',
+    val_product:'원하시는 LG 제품', val_period:'12 / 24 / 36개월',
+    why_h2:'고객이 LG Subscribe를 선택하는 이유', why_p:'좋아하는 LG 제품을 더 간편하게 소유하는 방법입니다.',
+    why1_h:'월 납입만으로 소유하기', why1_p:'낮고 예측 가능한 월 납입금으로 오늘부터 LG 제품을 사용해보세요.',
+    why2_h:'유연한 기간 선택', why2_p:'예산과 라이프스타일에 맞는 구독 기간을 선택하세요.',
+    why3_h:'케어 서비스 포함', why3_p:'[CARE SERVICE]가 구독 기간 내내 제품이 원활하게 작동하도록 관리합니다.',
+    why4_h:'보증 제공', why4_p:'모든 요금제에는 완전한 안심을 위한 [WARRANTY]가 포함됩니다.',
+    why5_h:'다양한 제품에 적용', why5_p:'매장 또는 이 키오스크에서 다양한 대상 LG 제품에 LG Subscribe를 적용할 수 있습니다.',
+    browse_h2:'모든 카테고리, 하나의 월 요금제',
+    browse_p:'표시된 시작 가격은 각 카테고리에서 36개월 요금제 기준 최저가 모델입니다. 원하시는 모델의 정확한 가격은 직원에게 문의해주세요.',
+    cat_all:'전체 제품', cat_all_p:'모든 카테고리 및 모델 보기 →',
+    cat_refrigerators:'냉장고', cat_tvs:'TV', cat_aircare:'에어케어', cat_ac:'에어컨',
+    cat_cooking:'쿠킹 가전', cat_audio:'오디오', cat_monitors:'모니터',
+    how_h2:'LG Subscribe 이용 방법',
+    how_p:'하나의 월 요금제로 제품과 케어 서비스를 모두 이용할 수 있습니다 — 지금 보고 계신 디스플레이를 포함한 대상 LG 제품에 적용됩니다.',
+    feat1:'간편한 월 납입 — 큰 초기 비용 없음',
+    feat2:'원하는 구독 기간 선택: [SUBSCRIPTION PERIOD]',
+    feat3:'안심을 위한 [CARE SERVICE] 포함',
+    feat4:'[WARRANTY] 보장',
+    feat5:'추가로 [OTHER BENEFIT]',
+    feat6:'현장 LG 팀의 안내를 받는 등록 절차',
+    lookup_tag:'나에게 맞는 요금제 찾기', lookup_choose_cat:'1. 카테고리 선택', lookup_choose_model:'2. 모델 선택',
+    lookup_empty:'카테고리와 모델을 선택하면 12 / 24 / 36개월 요금을 확인할 수 있습니다.',
+    lookup_price_label:'LG Subscribe 가격:', lookup_m12:'12개월', lookup_m24:'24개월', lookup_m36:'36개월',
+    promo_badge:'특별 혜택', promo_h2:'에어케어 혜택 — 남부 지역',
+    promo_value:'최대 ₫1,500,000 상당의 기프트 바우처',
+    promo_note:'남부 지역에서 구매한 대상 에어케어 공기청정기 대상 · 2026년 10월 6일 – 10월 30일까지 유효',
+    promo_cta:'에어케어 혜택 보기',
+    steps_h2:'LG Subscribe 신청 방법', steps_p:'현장 팀의 도움으로 진행하는 세 가지 간단한 단계.',
+    step1_h:'LG 제품 선택', step1_p:'이 키오스크에서 이용 가능한 대상 LG 제품을 선택하세요.',
+    step2_h:'LG Subscribe 선택', step2_p:'필요에 맞는 구독 요금제와 기간을 선택하세요.',
+    step3_h:'등록 완료', step3_p:'직원이 등록을 완료해드리며, 바로 제품을 이용하실 수 있습니다.',
+    final_h2:'LG Subscribe를 지금 시작해보세요', cta_register:'지금 등록하기', cta_talk:'영업팀과 상담하기: 18001503',
+    foot_support_h:'고객 지원', foot_support_p1:'이 키오스크의 직원에게 문의하세요', foot_care_label:'고객센터:',
+    foot_legal_h:'약관', foot_terms:'이용약관', foot_privacy:'개인정보 처리방침',
+    foot_link1:'요금제 및 가격', foot_link2:'현재 혜택',
+    foot_bottom:'© 2026 LG Electronics. All rights reserved. · 이 키오스크의 LG STANBYME에 표시됩니다.'
+  }
+};
+
+let lang = 'en';
+let lastProduct = null;
+
+function renderCatOptions(){
+  const catSelect = document.getElementById('catSelect');
+  const prevValue = catSelect.value;
+  catSelect.innerHTML = '';
+  const placeholder = document.createElement('option');
+  placeholder.value = ''; placeholder.textContent = I18N[lang].lookup_choose_cat;
+  catSelect.appendChild(placeholder);
+  const categories = [...new Set(LG_PRODUCTS.map(p => p.c))];
+  categories.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = (CAT_LABELS[lang] && CAT_LABELS[lang][c]) || c;
+    catSelect.appendChild(opt);
+  });
+  catSelect.value = prevValue;
+}
+
+function renderModelOptions(){
+  const modelSelect = document.getElementById('modelSelect');
+  const catSelect = document.getElementById('catSelect');
+  const prevValue = modelSelect.value;
+  modelSelect.innerHTML = '';
+  const placeholder = document.createElement('option');
+  placeholder.value = ''; placeholder.textContent = I18N[lang].lookup_choose_model;
+  modelSelect.appendChild(placeholder);
+  if(!catSelect.value){ modelSelect.disabled = true; return; }
+  const models = LG_PRODUCTS.filter(p => p.c === catSelect.value);
+  models.forEach((p, idx) => {
+    const opt = document.createElement('option');
+    opt.value = idx; opt.textContent = p.m;
+    modelSelect.appendChild(opt);
+  });
+  modelSelect.disabled = false;
+  modelSelect._filtered = models;
+  if(prevValue !== '' && models[prevValue]) modelSelect.value = prevValue;
+}
+
+function renderResult(){
+  const resultEl = document.getElementById('lookupResult');
+  const emptyEl = document.getElementById('lookupEmpty');
+  if(!lastProduct){ resultEl.style.display = 'none'; emptyEl.style.display = 'block'; return; }
+  const p = lastProduct;
+  const t = I18N[lang];
+  emptyEl.style.display = 'none';
+  resultEl.style.display = 'block';
+  resultEl.innerHTML = `
+    ${IMG_MAP[p.m] ? `<div class="lookup-img"><img src="${IMG_MAP[p.m]}" alt="${p.m}"></div>` : ''}
+    <div class="lookup-model">${p.m}</div>
+    <div class="lookup-onetime">${t.lookup_price_label} ${fmtVND(p.ot)}</div>
+    <div class="lookup-plans">
+      <div class="lookup-plan"><div class="lp-term">${t.lookup_m12}</div><div class="lp-amount">${fmtVND(p.m12)}<span>${t.unit_month}</span></div></div>
+      <div class="lookup-plan"><div class="lp-term">${t.lookup_m24}</div><div class="lp-amount">${fmtVND(p.m24)}<span>${t.unit_month}</span></div></div>
+      <div class="lookup-plan"><div class="lp-term">${t.lookup_m36}</div><div class="lp-amount">${fmtVND(p.m36)}<span>${t.unit_month}</span></div></div>
+    </div>`;
+}
+
+function setLang(l){
+  lang = l;
+  document.getElementById('btnEN').classList.toggle('active', l === 'en');
+  document.getElementById('btnVI').classList.toggle('active', l === 'vi');
+  document.getElementById('btnKO').classList.toggle('active', l === 'ko');
+  document.documentElement.lang = l;
+  try{ localStorage.setItem('lg_lang', l); }catch(e){}
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if(I18N[lang][key] !== undefined) el.textContent = I18N[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if(I18N[lang][key] !== undefined) el.innerHTML = I18N[lang][key];
+  });
+  renderCatOptions();
+  renderModelOptions();
+  renderResult();
+}
+
+(function initLookup(){
+  const catSelect = document.getElementById('catSelect');
+  const modelSelect = document.getElementById('modelSelect');
+
+  catSelect.addEventListener('change', () => {
+    lastProduct = null;
+    renderModelOptions();
+    renderResult();
+  });
+
+  modelSelect.addEventListener('change', (e) => {
+    lastProduct = (e.target.value === '') ? null : e.target._filtered[e.target.value];
+    renderResult();
+  });
+
+  let savedLang = 'en';
+  try{ savedLang = localStorage.getItem('lg_lang') || 'en'; }catch(e){}
+  setLang(savedLang);
+})();
+</script>
+</body>
+</html>
