@@ -221,13 +221,52 @@
   .foot-col p, .foot-col a{color:#a9a9ad; text-decoration:none; display:block; margin-bottom:8px; font-size:14px;}
   .foot-col a:hover{color:#fff;}
   .foot-bottom{border-top:1px solid #2c2c2e; padding-top:22px; text-align:center; color:#7c7c80; font-size:13px;}
+
+/* Splash banner */
+#splash{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:#cfe6f7;cursor:pointer;overflow:hidden;transition:opacity .45s ease;-webkit-tap-highlight-color:transparent}
+#splash.hide{opacity:0;pointer-events:none}
+#splash .sp-bg{position:absolute;inset:-20px;background:url(banner.webp) center/cover no-repeat;filter:blur(24px) brightness(.95)}
+#splash img{position:relative;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;display:block}
+body.splash-on{overflow:hidden}
 </style>
 </head>
 <body>
+<div id="splash" role="button" aria-label="Enter LG Subscribe">
+  <div class="sp-bg"></div>
+  <img src="banner.webp" alt="LG Subscribe">
+</div>
+<script>
+(function(){
+  var sp=document.getElementById('splash');
+  function show(){
+    sp.classList.remove('hide');
+    sp.style.display='flex';
+    document.body.classList.add('splash-on');
+    window.scrollTo(0,0);
+  }
+  function enter(){
+    try{sessionStorage.setItem('lg_splash_seen','1');}catch(e){}
+    sp.classList.add('hide');
+    document.body.classList.remove('splash-on');
+    window.scrollTo(0,0);
+    setTimeout(function(){ if(sp.classList.contains('hide')) sp.style.display='none'; },500);
+  }
+  window.showSplash=show;
+  var force=/[?&]splash=1/.test(location.search);
+  var seen=false;
+  try{seen=sessionStorage.getItem('lg_splash_seen')==='1';}catch(e){}
+  if(force){ try{history.replaceState(null,'',location.pathname);}catch(e){} }
+  if(seen && !force){ sp.style.display='none'; }
+  else { document.body.classList.add('splash-on'); }
+  sp.addEventListener('click',enter);
+  sp.addEventListener('touchend',function(e){e.preventDefault();enter();});
+})();
+</script>
+
 
 <nav>
   <div class="container nav-row">
-    <img class="nav-logo-img" src="lg-subscribe-logo.png" alt="LG Subscribe">
+    <a href="index.html?splash=1" onclick="if(window.showSplash){showSplash();return false;}" aria-label="LG Subscribe" style="display:block;cursor:pointer"><img class="nav-logo-img" src="lg-subscribe-logo.png" alt="LG Subscribe"></a>
     <div style="display:flex; align-items:center; gap:14px;">
       <div class="lang-toggle">
         <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>

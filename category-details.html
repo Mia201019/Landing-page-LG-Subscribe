@@ -71,6 +71,17 @@
   .gift-chip{background:var(--lg-red-tint); color:var(--lg-red); font-size:12px; font-weight:600; padding:5px 10px; border-radius:8px;}
   .no-gift{color:var(--lg-sub); font-size:12.5px; font-style:italic;}
 
+  .filters{display:flex; flex-wrap:wrap; gap:12px; align-items:flex-end; margin-top:22px; padding:16px; background:var(--lg-mist); border-radius:16px;}
+  .f-item{display:flex; flex-direction:column; gap:6px; min-width:150px; flex:1 1 150px;}
+  .f-item.f-search{flex:2 1 240px;}
+  .f-item label{font-size:11.5px; font-weight:600; color:var(--lg-sub); text-transform:uppercase; letter-spacing:.3px;}
+  .f-item input,.f-item select{height:44px; border:1.5px solid var(--lg-line); border-radius:12px; background:#fff; padding:0 14px; font-family:'Inter',sans-serif; font-size:14.5px; color:var(--lg-ink); width:100%;}
+  .f-item input:focus,.f-item select:focus{outline:none; border-color:var(--lg-red);}
+  .f-check{flex:0 0 auto; min-width:0; height:44px; display:flex; align-items:center; gap:8px; background:#fff; border:1.5px solid var(--lg-line); border-radius:12px; padding:0 14px; font-size:14.5px; font-weight:500; cursor:pointer; user-select:none;}
+  .f-check input{width:18px; height:18px; accent-color:var(--lg-red); margin:0;}
+  .f-reset{flex:0 0 auto; height:44px; border:none; background:var(--lg-red); color:#fff; font-family:'Inter'; font-weight:600; font-size:14px; padding:0 20px; border-radius:12px; cursor:pointer;}
+  .f-reset:hover{background:var(--lg-red-dark);}
+
   .empty-state{text-align:center; padding:80px 20px; color:var(--lg-sub);}
   .empty-state h3{font-size:20px; color:var(--lg-ink); margin-bottom:8px;}
 </style>
@@ -80,7 +91,7 @@
 <nav>
   <div class="container nav-row">
     <div class="nav-left">
-      <img class="nav-logo-img" src="lg-subscribe-logo.png" alt="LG Subscribe">
+      <a href="index.html?splash=1" aria-label="LG Subscribe" style="display:block"><img class="nav-logo-img" src="lg-subscribe-logo.png" alt="LG Subscribe"></a>
       <a href="index.html" class="back-link" data-i18n="back">← Back to home</a>
     </div>
     <div class="lang-toggle">
@@ -106,6 +117,14 @@
 </div>
 
 <main class="container">
+  <div class="filters" id="filters">
+    <div class="f-item f-search"><label for="fSearch" data-i18n="f_search">Search model</label><input id="fSearch" type="search" autocomplete="off" oninput="applyFilters()"></div>
+    <div class="f-item"><label for="fPrice" data-i18n="f_price">Monthly price (36 months)</label><select id="fPrice" onchange="applyFilters()"></select></div>
+    <div class="f-item"><label for="fDisc" data-i18n="f_disc">Discount</label><select id="fDisc" onchange="applyFilters()"></select></div>
+    <div class="f-item"><label for="fSort" data-i18n="f_sort">Sort by</label><select id="fSort" onchange="applyFilters()"></select></div>
+    <label class="f-check"><input type="checkbox" id="fGift" onchange="applyFilters()"><span data-i18n="f_gift">With gifts</span></label>
+    <button class="f-reset" type="button" onclick="resetFilters()" data-i18n="f_reset">Reset</button>
+  </div>
   <div class="results-bar">
     <div class="results-count" id="resultsCount"></div>
   </div>
@@ -132,7 +151,7 @@ const I18N = {
     list_price:'List price', sub_price:'LG Subscribe price', save:'Save', mo:'/mo',
     m12:'12 months', m24:'24 months', m36:'36 months',
     gifts:'Gifts included', evoucher:'E-Voucher', south:'South-region voucher',
-    no_gift:'No additional gift', empty_h:'No products in this category yet', empty_p:'No current promotion for this category.',
+    no_gift:'No additional gift', f_search:'Search model', f_search_ph:'e.g. OLED65, GR-X, F2514…', f_price:'Monthly price (36 months)', f_disc:'Discount', f_sort:'Sort by', f_gift:'With gifts', f_reset:'Reset filters', none_h:'No products match your filters', none_p:'Try changing or resetting the filters.', p_all:'All prices', p1:'Under ₫500,000', p2:'₫500,000 – ₫1,000,000', p3:'₫1,000,000 – ₫2,000,000', p4:'Over ₫2,000,000', d_all:'Any discount', d10:'10% or more', d20:'20% or more', d30:'30% or more', s_def:'Default', s_pa:'Price: low to high', s_pd:'Price: high to low', s_dd:'Discount: high to low', empty_h:'No products in this category yet', empty_p:'No current promotion for this category.',
     cats:{'Refrigerators':'Refrigerators','Dishwashers':'Dishwashers','TVs':'TVs','Air Care':'Air Care','Air Conditioners':'Air Conditioners','Cooking':'Cooking','Audio':'Audio','Monitors':'Monitors'}
   },
   vi: {
@@ -143,7 +162,7 @@ const I18N = {
     list_price:'Giá niêm yết', sub_price:'Giá LG Subscribe', save:'Tiết kiệm', mo:'/tháng',
     m12:'12 tháng', m24:'24 tháng', m36:'36 tháng',
     gifts:'Quà tặng kèm', evoucher:'E-Voucher', south:'Voucher khu vực miền Nam',
-    no_gift:'Không có quà tặng kèm', empty_h:'Chưa có sản phẩm trong danh mục này', empty_p:'Chưa có chương trình khuyến mãi cho danh mục này.',
+    no_gift:'Không có quà tặng kèm', f_search:'Tìm mã sản phẩm', f_search_ph:'VD: OLED65, GR-X, F2514…', f_price:'Giá theo tháng (36 tháng)', f_disc:'Mức giảm', f_sort:'Sắp xếp', f_gift:'Có quà tặng', f_reset:'Xóa bộ lọc', none_h:'Không có sản phẩm phù hợp với bộ lọc', none_p:'Hãy thử đổi hoặc xóa bộ lọc.', p_all:'Tất cả mức giá', p1:'Dưới ₫500.000', p2:'₫500.000 – ₫1.000.000', p3:'₫1.000.000 – ₫2.000.000', p4:'Trên ₫2.000.000', d_all:'Mọi mức giảm', d10:'Từ 10% trở lên', d20:'Từ 20% trở lên', d30:'Từ 30% trở lên', s_def:'Mặc định', s_pa:'Giá: thấp đến cao', s_pd:'Giá: cao đến thấp', s_dd:'Mức giảm: cao đến thấp', empty_h:'Chưa có sản phẩm trong danh mục này', empty_p:'Chưa có chương trình khuyến mãi cho danh mục này.',
     cats:{'Refrigerators':'Tủ lạnh','Dishwashers':'Máy rửa chén','TVs':'Tivi','Air Care':'Chăm sóc không khí','Air Conditioners':'Máy lạnh','Cooking':'Bếp / Lò vi sóng','Audio':'Âm thanh','Monitors':'Màn hình'}
   },
   ko: {
@@ -154,13 +173,35 @@ const I18N = {
     list_price:'정가', sub_price:'LG Subscribe 가격', save:'절약', mo:'/월',
     m12:'12개월', m24:'24개월', m36:'36개월',
     gifts:'포함 증정품', evoucher:'E-바우처', south:'남부 지역 바우처',
-    no_gift:'추가 증정품 없음', empty_h:'아직 이 카테고리에 제품이 없습니다', empty_p:'이 카테고리에는 현재 진행 중인 프로모션이 없습니다.',
+    no_gift:'추가 증정품 없음', f_search:'모델 검색', f_search_ph:'예: OLED65, GR-X, F2514…', f_price:'월 요금 (36개월)', f_disc:'할인율', f_sort:'정렬', f_gift:'증정품 포함', f_reset:'필터 초기화', none_h:'필터 조건에 맞는 제품이 없습니다', none_p:'필터를 변경하거나 초기화해 보세요.', p_all:'전체 가격', p1:'₫500,000 미만', p2:'₫500,000 – ₫1,000,000', p3:'₫1,000,000 – ₫2,000,000', p4:'₫2,000,000 초과', d_all:'전체 할인율', d10:'10% 이상', d20:'20% 이상', d30:'30% 이상', s_def:'기본순', s_pa:'가격 낮은 순', s_pd:'가격 높은 순', s_dd:'할인율 높은 순', empty_h:'아직 이 카테고리에 제품이 없습니다', empty_p:'이 카테고리에는 현재 진행 중인 프로모션이 없습니다.',
     cats:{'Refrigerators':'냉장고','Dishwashers':'식기세척기','TVs':'TV','Air Care':'에어케어','Air Conditioners':'에어컨','Cooking':'쿠킹 가전','Audio':'오디오','Monitors':'모니터'}
   }
 };
 
 let lang = 'en';
 let activeCat = 'all';
+const PRICE_BANDS = [[0,Infinity],[0,500000],[500000,1000000],[1000000,2000000],[2000000,Infinity]];
+const DISC_MIN = [0,10,20,30];
+const hasGift = p => !!(p.evoucher || p.gift1 || p.gift2 || p.voucherSouth);
+
+function fillSelect(id, keys){
+  const el = document.getElementById(id), cur = el.value || '0';
+  el.innerHTML = keys.map((k,i)=>`<option value="${i}">${I18N[lang][k]}</option>`).join('');
+  el.value = cur;
+}
+function buildFilters(){
+  fillSelect('fPrice',['p_all','p1','p2','p3','p4']);
+  fillSelect('fDisc',['d_all','d10','d20','d30']);
+  fillSelect('fSort',['s_def','s_pa','s_pd','s_dd']);
+  document.getElementById('fSearch').placeholder = I18N[lang].f_search_ph;
+}
+function applyFilters(){ renderGrid(); }
+function resetFilters(){
+  document.getElementById('fSearch').value='';
+  ['fPrice','fDisc','fSort'].forEach(id=>document.getElementById(id).value='0');
+  document.getElementById('fGift').checked=false;
+  renderGrid();
+}
 
 function fmt(n){ return '₫' + n.toLocaleString('vi-VN'); }
 
@@ -175,6 +216,7 @@ function setLang(l){
     const key = el.getAttribute('data-i18n');
     if(I18N[lang][key]) el.textContent = I18N[lang][key];
   });
+  buildFilters();
   renderTabs();
   renderGrid();
 }
@@ -198,7 +240,18 @@ function selectCat(c){
 
 function renderGrid(){
   const t = I18N[lang];
-  const list = activeCat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === activeCat);
+  let list = activeCat === 'all' ? PRODUCTS.slice() : PRODUCTS.filter(p => p.cat === activeCat);
+  const q = document.getElementById('fSearch').value.trim().toLowerCase();
+  const band = PRICE_BANDS[+document.getElementById('fPrice').value];
+  const dmin = DISC_MIN[+document.getElementById('fDisc').value];
+  const sort = document.getElementById('fSort').value;
+  if(q) list = list.filter(p => p.model.toLowerCase().includes(q));
+  list = list.filter(p => p.m36 >= band[0] && p.m36 < band[1]);
+  if(dmin) list = list.filter(p => (p.discount||0) >= dmin);
+  if(document.getElementById('fGift').checked) list = list.filter(hasGift);
+  if(sort==='1') list.sort((a,b)=>a.m36-b.m36);
+  else if(sort==='2') list.sort((a,b)=>b.m36-a.m36);
+  else if(sort==='3') list.sort((a,b)=>(b.discount||0)-(a.discount||0));
   const gridEl = document.getElementById('productGrid');
   const emptyEl = document.getElementById('emptyState');
   document.getElementById('resultsCount').textContent = t.results(list.length);
@@ -206,6 +259,9 @@ function renderGrid(){
   if(list.length === 0){
     gridEl.style.display = 'none';
     emptyEl.style.display = 'block';
+    const filtered = q || band[1]!==Infinity || band[0]>0 || dmin || document.getElementById('fGift').checked;
+    emptyEl.querySelector('h3').textContent = filtered ? t.none_h : t.empty_h;
+    emptyEl.querySelector('p').textContent = filtered ? t.none_p : t.empty_p;
     return;
   }
   gridEl.style.display = 'grid';
