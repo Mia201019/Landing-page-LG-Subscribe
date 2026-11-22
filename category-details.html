@@ -57,6 +57,8 @@
   .pcard-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:14px;}
   .pcard-cat{font-size:12px; font-weight:600; color:var(--lg-red); text-transform:uppercase; letter-spacing:.4px; margin-bottom:4px;}
   .pcard-model{font-family:'Poppins'; font-weight:600; font-size:16.5px; line-height:1.3; word-break:break-word;}
+  a.plink{display:block; color:inherit; text-decoration:none; cursor:pointer;}
+  a.plink.pname:hover .pcard-model{color:var(--lg-red);}
   .pimg{height:170px; margin:-4px 0 16px; border-radius:14px; background:#fff; border:1px solid var(--lg-line); display:flex; align-items:center; justify-content:center; overflow:hidden;}
   .pimg img{width:100%; height:100%; object-fit:contain; display:block;}
   .pimg.empty{background:var(--lg-mist); border-color:var(--lg-mist);}
@@ -295,14 +297,15 @@ function renderGrid(){
       ? `<div class="gift-chips">${gifts.map(g=>`<span class="gift-chip">🎁 ${g}</span>`).join('')}</div>`
       : `<div class="no-gift">${t.no_gift}</div>`;
     const catLabel = (t.cats[p.cat] || p.cat) + (p.sub ? ' · ' + t.subs[p.sub] : '');
+    const href = 'product-detail.html?model=' + encodeURIComponent(p.model);
     return `
       <div class="pcard">
-        ${IMG_MAP[p.model] ? `<div class="pimg"><img src="${IMG_MAP[p.model]}" alt="${p.model}" loading="lazy"></div>` : `<div class="pimg empty"></div>`}
+        <a class="plink" href="${href}">${IMG_MAP[p.model] ? `<div class="pimg"><img src="${IMG_MAP[p.model]}" alt="${p.model}" loading="lazy"></div>` : `<div class="pimg empty"></div>`}</a>
         <div class="pcard-top">
-          <div>
+          <a class="plink pname" href="${href}">
             <div class="pcard-cat">${catLabel}</div>
             <div class="pcard-model">${p.model}</div>
-          </div>
+          </a>
           ${p.discount ? `<span class="discount-badge">-${p.discount}%</span>` : ''}
         </div>
         <div class="price-row">
