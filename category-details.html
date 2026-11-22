@@ -83,6 +83,7 @@
   .ub-box h3{margin:0 0 12px;font-size:19px}.ub-box ol{padding-left:20px;margin:0 0 12px;line-height:1.6}
   .ub-note{font-size:13px;color:#666;margin:0 0 16px}.ub-act{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
   .ub-link{color:var(--lg-red);font-weight:600;text-decoration:none}.ub-close{background:var(--lg-red);color:#fff;border:0;border-radius:10px;padding:9px 18px;font-weight:600;cursor:pointer}
+  .f-hint{margin:10px 2px 0;font-size:13px;color:var(--lg-sub)}
   .no-gift{color:var(--lg-sub); font-size:12.5px; font-style:italic;}
 
   .filters{display:flex; flex-wrap:wrap; gap:12px; align-items:flex-end; margin-top:22px; padding:16px; background:var(--lg-mist); border-radius:16px;}
@@ -120,7 +121,7 @@
   <div class="container">
     <h1 data-i18n="title">LG Subscribe — Program Details</h1>
     <p data-i18n="subtitle">Current pricing, discounts and gifts for every eligible LG product.</p>
-    <span class="period-pill" data-i18n="period">Monthly pricing valid 06/10 – 30/10/2026 · Total paid pricing valid 08/10 – 30/10/2026</span>
+    <span class="period-pill" data-i18n="period">Monthly pricing valid 06/10 – 30/11/2026 · Total paid pricing valid 08/10 – 30/11/2026</span>
   </div>
 </header>
 
@@ -137,9 +138,11 @@
     <div class="f-item"><label for="fPrice" data-i18n="f_price">Monthly price (36 months)</label><select id="fPrice" onchange="applyFilters()"></select></div>
     <div class="f-item"><label for="fDisc" data-i18n="f_disc">Discount</label><select id="fDisc" onchange="applyFilters()"></select></div>
     <div class="f-item"><label for="fSort" data-i18n="f_sort">Sort by</label><select id="fSort" onchange="applyFilters()"></select></div>
+    <div class="f-item" id="fSpecWrap" style="display:none"><label for="fSpec" id="fSpecLabel"></label><select id="fSpec" onchange="applyFilters()"></select></div>
     <label class="f-check"><input type="checkbox" id="fGift" onchange="applyFilters()"><span data-i18n="f_gift">With gifts</span></label>
     <button class="f-reset" type="button" onclick="resetFilters()" data-i18n="f_reset">Reset</button>
   </div>
+  <div class="f-hint" id="fSpecHint" style="display:none"></div>
   <div class="promo-until" id="promoUntil"></div>
   <div class="results-bar">
     <div class="results-count" id="resultsCount"></div>
@@ -162,7 +165,7 @@ const I18N = {
   en: {
     back:'← Back to home', title:'LG Subscribe — Program Details',
     subtitle:'Current pricing, discounts and gifts for every eligible LG product.',
-    period:'Monthly pricing valid 06/10 – 30/10/2026 · Total paid pricing valid 08/10 – 30/10/2026',
+    period:'Monthly pricing valid 06/10 – 30/11/2026 · Total paid pricing valid 08/10 – 30/11/2026',
     tab_all:'All products', results:(n)=> n===1 ? '1 product' : n+' products',
     list_price:'List price', sub_price:'LG Subscribe price', save:'Save', mo:'/mo',
     m12:'12 months', m24:'24 months', m36:'36 months',
@@ -173,7 +176,7 @@ const I18N = {
   vi: {
     back:'← Về trang chủ', title:'LG Subscribe — Chi tiết chương trình',
     subtitle:'Giá, ưu đãi và quà tặng hiện hành cho từng sản phẩm LG đủ điều kiện.',
-    period:'Giá theo tháng áp dụng 06/10 – 30/10/2026 · Giá trả góp tổng áp dụng 08/10 – 30/10/2026',
+    period:'Giá theo tháng áp dụng 06/10 – 30/11/2026 · Giá trả góp tổng áp dụng 08/10 – 30/11/2026',
     tab_all:'Tất cả sản phẩm', results:(n)=> n+' sản phẩm',
     list_price:'Giá niêm yết', sub_price:'Giá LG Subscribe', save:'Tiết kiệm', mo:'/tháng',
     m12:'12 tháng', m24:'24 tháng', m36:'36 tháng',
@@ -184,7 +187,7 @@ const I18N = {
   ko: {
     back:'← 홈으로', title:'LG Subscribe — 프로그램 상세',
     subtitle:'모든 대상 LG 제품의 현재 가격, 할인 및 증정품 정보입니다.',
-    period:'월 요금은 2026년 10월 6일 – 10월 30일까지 유효 · 일시불 가격은 2026년 10월 8일 – 10월 30일까지 유효',
+    period:'월 요금은 2026년 10월 6일 – 11월 30일까지 유효 · 일시불 가격은 2026년 10월 8일 – 11월 30일까지 유효',
     tab_all:'전체 제품', results:(n)=> n+'개 제품',
     list_price:'정가', sub_price:'LG Subscribe 가격', save:'절약', mo:'/월',
     m12:'12개월', m24:'24개월', m36:'36개월',
@@ -214,11 +217,49 @@ function buildFilters(){
   fillSelect('fSort',['s_def','s_pa','s_pd','s_dd']);
   document.getElementById('fSearch').placeholder = I18N[lang].f_search_ph;
 }
+/*SPECF*/
+const FILT={"AS10GDWH0":{"a":100.0},"AS20GPBK0":{"a":20.0},"AS20GPWU0":{"a":20.0},"AS20GSHU0":{"a":19.8},"FS15GPBK0":{"a":23.0},"AS30GGW1A":{"a":27.0},"AS30GGG1A":{"a":27.0},"AS10GDBY0":{"a":104.0},"AS65GDBY0":{"a":61.2},"AS55GGSY0":{"a":52.8},"AS60GHWG0":{"a":60.0},"LBB33BLGA":{"w":600.0},"LBB33BLM":{"w":600.0},"LBB33BGMAI":{"w":600.0},"LFD61BLGAI":{"w":835.0},"LFD58BLMAI":{"w":835.0},"F61BMD":{"w":835.0},"F58BGD":{"w":835.0},"LFB58BLMA":{"w":835.0},"F51EG":{"w":830.0},"F50BG":{"w":830.0},"GR-X257BG":{"w":913.0},"LSI63BLMA":{"w":913.0},"T33SV":{"w":603.0},"T30SV":{"w":603.0},"T26BG":{"w":555.0},"T21BG":{"w":555.0},"IDC09M2":{"btu":9300},"IDC12M2":{"btu":12300},"IDC18M2":{"btu":18100},"IDH09M1":{"btu":9300},"IDH12M1":{"btu":12300},"IDH18M1":{"btu":18100},"IDH24M1":{"btu":22000},"WT2517NHEG":{"w":700.0,"kg":25.0},"WT1410NHEG":{"w":600.0,"kg":14.0},"WT1410NHB":{"w":600.0,"kg":14.0},"RX12VHP3K":{"kg":12.0},"F2515RNTG":{"w":650.0,"kg":15.0},"FX1414R3KA":{"kg":14.0},"FX1412R3KA":{"kg":12.0},"F2520SNTKA":{"w":650.0,"kg":20.0},"F2515SNTG":{"w":600.0,"kg":15.0},"FX1414S3KA":{"w":600.0,"kg":14.0},"FX1412S3KAV":{"w":600.0,"kg":12.0},"FX1412N5G":{"w":600.0,"kg":12.0},"FX1410N5G":{"w":600.0,"kg":10.0},"FV1410S4M1":{"w":600.0,"kg":10.0},"FV1409S4M1":{"w":600.0,"kg":9.0},"FB1209S5W":{"w":600.0,"kg":9.0},"TX2725AT9G":{"w":686.0,"kg":25.0},"T2725SX5G":{"w":686.0,"kg":25.0},"T2522AX7G":{"w":651.0,"kg":22.0},"T2519SX5G":{"w":651.0,"kg":19.0},"T2516DX5G":{"w":651.0,"kg":16.0},"T2315DX5G":{"w":590.0,"kg":15.0},"TX2312DT5O":{"kg":12.0},"MS2535GIK":{"w":476.0},"MS3032JAS":{"w":508.0},"MS2032GIK":{"w":454.0},"MS2032GAS":{"w":454.0}};
+const TVD=(inch,d)=>{const m=inch*0.0254;return d>=1.2*m&&d<=1.6*m;};
+const tvInch=p=>{const m=p.model.match(/^(?:OLED)?(\d+)/);return m?+m[1]:null;};
+const SPECF={
+ 'Air Care':{label:{en:'Room area',vi:'Diện tích phòng',ko:'방 면적'},
+  hint:{en:'Shows purifiers whose rated coverage area is about 1–2× the room size, so a small room is not matched with a very large unit.',vi:'Hiển thị máy có diện tích phục vụ khoảng 1–2 lần diện tích phòng, để phòng nhỏ không bị gợi ý máy quá lớn.',ko:'정격 적용 면적이 방 면적의 약 1~2배인 제품을 표시하여 작은 방에 지나치게 큰 제품이 나오지 않게 합니다.'},
+  opts:[15,20,30,50,80].map(a=>({l:{en:'About '+a+' m²',vi:'Khoảng '+a+' m²',ko:'약 '+a+' m²'},t:p=>{const c=(FILT[p.model.split('.')[0]]||{}).a;return c>=a*0.95&&c<=a*2;}}))},
+ 'Refrigerators':{label:{en:'Available width for the fridge',vi:'Chiều rộng chỗ đặt tủ',ko:'냉장고 설치 가로 공간'},
+  hint:{en:'Shows fridges whose body width fits the selected space (add clearance for ventilation and doors).',vi:'Hiển thị tủ có chiều rộng thân tủ vừa với khoảng trống đã chọn (nên chừa thêm khe thông thoáng và mở cửa).',ko:'본체 가로폭이 선택한 공간에 들어가는 냉장고를 표시합니다(환기·문 열림 여유 공간 별도).'},
+  opts:[60,65,70,80,90,100].map(w=>({l:{en:'Up to '+w+' cm wide',vi:'Rộng đến '+w+' cm',ko:'가로 '+w+' cm 이하'},t:p=>(FILT[p.model.split('.')[0]]||{}).w<=w*10}))},
+ 'TVs':{label:{en:'Sofa-to-TV distance',vi:'Khoảng cách từ sofa đến tivi',ko:'소파와 TV 사이 거리'},
+  hint:{en:'Reference only: comfortable viewing distance is about 1.2–1.6 × the screen diagonal.',vi:'Chỉ mang tính tham khảo: khoảng cách xem thoải mái khoảng 1,2–1,6 lần đường chéo màn hình.',ko:'참고용: 편안한 시청 거리는 화면 대각선의 약 1.2–1.6배입니다.'},
+  opts:[1.5,2,2.5,3,3.5,4].map(d=>({l:{en:'About '+d+' m',vi:'Khoảng '+String(d).replace('.',',')+' m',ko:'약 '+d+' m'},t:p=>{const i=tvInch(p);return i&&TVD(i,d);}}))},
+ 'Washing Machines':{label:{en:'Household size',vi:'Số người trong nhà',ko:'가구 인원'},
+  hint:{en:'Reference only: matched to wash capacity (dryers: dry capacity). Models without a listed capacity are hidden.',vi:'Chỉ mang tính tham khảo: quy theo khối lượng giặt (máy sấy: khối lượng sấy). Mã chưa có thông số khối lượng sẽ không hiển thị.',ko:'참고용: 세탁 용량(건조기는 건조 용량) 기준입니다. 용량 정보가 없는 모델은 표시되지 않습니다.'},
+  opts:[{l:{en:'1–2 people (up to 10 kg)',vi:'1–2 người (đến 10 kg)',ko:'1–2인 (10kg 이하)'},t:p=>(FILT[p.model.split('.')[0]]||{}).kg<=10},
+        {l:{en:'3–4 people (11–15 kg)',vi:'3–4 người (11–15 kg)',ko:'3–4인 (11–15kg)'},t:p=>{const k=(FILT[p.model.split('.')[0]]||{}).kg;return k>=11&&k<=15;}},
+        {l:{en:'5+ people (16 kg or more)',vi:'Từ 5 người (từ 16 kg)',ko:'5인 이상 (16kg 이상)'},t:p=>(FILT[p.model.split('.')[0]]||{}).kg>=16}]},
+ 'Air Conditioners':{label:{en:'Room area',vi:'Diện tích phòng',ko:'방 면적'},
+  hint:{en:'Reference only: matched to cooling capacity (9,000 Btu/h ≈ up to 15 m², 12,000 ≈ 15–20 m², 18,000 ≈ 20–30 m², 24,000 ≈ 30–40 m²).',vi:'Chỉ mang tính tham khảo: quy theo công suất lạnh (9.000 Btu/h ≈ đến 15 m², 12.000 ≈ 15–20 m², 18.000 ≈ 20–30 m², 24.000 ≈ 30–40 m²).',ko:'참고용: 냉방 능력 기준(9,000 Btu/h ≈ 15㎡ 이하, 12,000 ≈ 15–20㎡, 18,000 ≈ 20–30㎡, 24,000 ≈ 30–40㎡).'},
+  opts:[[0,15,'Up to 15 m²','Đến 15 m²','15 m² 이하',9000],[15,20,'15–20 m²','15–20 m²','15–20 m²',12000],[20,30,'20–30 m²','20–30 m²','20–30 m²',18000],[30,40,'30–40 m²','30–40 m²','30–40 m²',24000]].map(o=>({l:{en:o[2],vi:o[3],ko:o[4]},t:p=>{const b=(FILT[p.model.split('.')[0]]||{}).btu;return b&&Math.abs(b-o[5])<=o[5]*0.1;}}))},
+ 'Cooking':{label:{en:'Counter space (width)',vi:'Chiều rộng chỗ đặt lò',ko:'설치 가능 가로 공간'},
+  hint:{en:'Shows microwaves whose body width fits the selected space.',vi:'Hiển thị lò có chiều rộng thân lò vừa với khoảng trống đã chọn.',ko:'본체 가로폭이 선택한 공간에 들어가는 전자레인지를 표시합니다.'},
+  opts:[46,48,50,55].map(w=>({l:{en:'Up to '+w+' cm wide',vi:'Rộng đến '+w+' cm',ko:'가로 '+w+' cm 이하'},t:p=>(FILT[p.model.split('.')[0]]||{}).w<=w*10}))}
+};
+function buildSpecFilter(){
+  const wrap=document.getElementById('fSpecWrap'),sel=document.getElementById('fSpec'),sf=SPECF[activeCat];
+  if(!sf){wrap.style.display='none';sel.innerHTML='';document.getElementById('fSpecHint').style.display='none';return;}
+  const cur=sel.value&&sel.dataset.cat===activeCat?sel.value:'0';
+  wrap.style.display='';document.getElementById('fSpecLabel').textContent=sf.label[lang];
+  const all={en:'Any',vi:'Tất cả',ko:'전체'}[lang];
+  sel.innerHTML=`<option value="0">${all}</option>`+sf.opts.map((o,i)=>`<option value="${i+1}">${o.l[lang]}</option>`).join('');
+  sel.dataset.cat=activeCat;sel.value=cur;
+  const h=document.getElementById('fSpecHint');h.textContent='ⓘ '+sf.hint[lang];h.style.display='';
+}
+/*ENDSPECF*/
 function applyFilters(){ renderGrid(); }
 function resetFilters(){
   document.getElementById('fSearch').value='';
   ['fPrice','fDisc','fSort'].forEach(id=>document.getElementById(id).value='0');
   document.getElementById('fGift').checked=false;
+  document.getElementById('fSpec').value='0';
   renderGrid();
 }
 
@@ -296,12 +337,14 @@ function renderTabs(){
 
 function selectCat(c){
   activeCat = c; activeSub = 'all';
+  document.getElementById('fSpec').value='0';
   renderTabs();
   renderGrid();
 }
 
 function renderGrid(){
   const t = I18N[lang];
+  buildSpecFilter();
   let list = activeCat === 'all' ? PRODUCTS.slice() : PRODUCTS.filter(p => p.cat === activeCat);
   if(activeCat === WM_CAT && activeSub !== 'all') list = list.filter(p => p.sub === activeSub);
   const q = document.getElementById('fSearch').value.trim().toLowerCase();
@@ -312,6 +355,8 @@ function renderGrid(){
   list = list.filter(p => p.m36 >= band[0] && p.m36 < band[1]);
   if(dmin) list = list.filter(p => (p.discount||0) >= dmin);
   if(document.getElementById('fGift').checked) list = list.filter(hasGift);
+  const sf=SPECF[activeCat], si=+document.getElementById('fSpec').value;
+  if(sf && si>0) list = list.filter(p => sf.opts[si-1].t(p));
   if(sort==='1') list.sort((a,b)=>a.m36-b.m36);
   else if(sort==='2') list.sort((a,b)=>b.m36-a.m36);
   else if(sort==='3') list.sort((a,b)=>(b.discount||0)-(a.discount||0));
@@ -364,7 +409,7 @@ function renderGrid(){
 }
 
 const ST_KEY='lg_cat_state';
-function saveState(){try{sessionStorage.setItem(ST_KEY,JSON.stringify({cat:activeCat,sub:activeSub,q:document.getElementById('fSearch').value,pr:document.getElementById('fPrice').value,d:document.getElementById('fDisc').value,so:document.getElementById('fSort').value,g:document.getElementById('fGift').checked,y:window.scrollY}));}catch(e){}}
+function saveState(){try{sessionStorage.setItem(ST_KEY,JSON.stringify({cat:activeCat,sub:activeSub,q:document.getElementById('fSearch').value,pr:document.getElementById('fPrice').value,d:document.getElementById('fDisc').value,so:document.getElementById('fSort').value,g:document.getElementById('fGift').checked,sp:document.getElementById('fSpec').value,y:window.scrollY}));}catch(e){}}
 window.addEventListener('pagehide',saveState);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveState();});
 function restoreState(){
@@ -375,7 +420,7 @@ function restoreState(){
   document.getElementById('fSearch').value=st.q||'';
   document.getElementById('fPrice').value=st.pr;document.getElementById('fDisc').value=st.d;document.getElementById('fSort').value=st.so;
   document.getElementById('fGift').checked=!!st.g;
-  renderTabs();renderSubTabs();renderGrid();
+  renderTabs();renderSubTabs();buildSpecFilter();document.getElementById('fSpec').value=st.sp||'0';renderGrid();
   const go=()=>window.scrollTo(0,st.y||0);requestAnimationFrame(go);setTimeout(go,250);setTimeout(go,800);window.addEventListener('load',go,{once:true});
 }
 (function init(){
