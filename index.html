@@ -123,6 +123,8 @@
     display:inline-block; background:var(--lg-red-tint); color:var(--lg-red); font-size:12.5px;
     font-weight:600; padding:3px 10px; border-radius:999px; margin-left:8px;
   }
+  .lookup-detail{display:block; margin-top:16px; text-align:center; font-weight:600; font-size:14.5px; color:var(--lg-red); text-decoration:none; padding:12px; border:1.5px solid var(--lg-red); border-radius:12px;}
+  .lookup-detail:hover{background:var(--lg-red); color:#fff;}
   .lookup-plans{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
   @media(max-width:480px){.lookup-plans{grid-template-columns:1fr;}}
   .lookup-plan{background:var(--lg-mist); border-radius:14px; padding:16px 14px; text-align:center;}
@@ -374,7 +376,7 @@ body.splash-on{overflow:hidden}
         <h3 data-i18n="cat_tvs">TVs</h3>
         <p><span data-i18n="from_label">From</span> <strong>₫330.000</strong><span data-i18n="unit_month">/month</span></p>
       </a>
-      <a class="hi-card hi-card-link" href="category-details.html?cat=Air%20Care">
+      <a class="hi-card hi-card-link" href="category-details.html">
         <div class="hi-icon">🌬️</div>
         <h3 data-i18n="cat_aircare">Air Care</h3>
         <p><span data-i18n="from_label">From</span> <strong>₫200.000</strong><span data-i18n="unit_month">/month</span></p>
@@ -440,11 +442,11 @@ body.splash-on{overflow:hidden}
     <div class="promo">
       <div class="promo-left">
         <span class="badge" data-i18n="promo_badge">Special Offer</span>
-        <h2 data-i18n="promo_h2">Air Care Offer — Southern Region</h2>
-        <div class="promo-value" data-i18n="promo_value">Gift voucher up to ₫1,500,000</div>
-        <p class="note" data-i18n="promo_note">On eligible Air Care purifiers purchased in the Southern region · Valid 06/10 – 30/10/2026</p>
+        <h2 data-i18n="promo_h2">LG Subscribe Offers — until 30/11</h2>
+        <div class="promo-value" data-i18n="promo_value">Urbox voucher & gifts included</div>
+        <p class="note" data-i18n="promo_note">Promotion valid until the end of 30/11/2026 · On eligible products</p>
       </div>
-      <a class="btn-primary" style="text-decoration:none; display:inline-block;" data-i18n="promo_cta" href="category-details.html?cat=Air%20Care">View Air Care Offers</a>
+      <a class="btn-primary" style="text-decoration:none; display:inline-block;" data-i18n="promo_cta" href="category-details.html">View offers</a>
     </div>
   </div>
 </section>
@@ -550,11 +552,11 @@ const I18N = {
     feat6:'Guided registration with our on-site LG team',
     lookup_tag:'Find your exact plan', lookup_choose_cat:'1. Choose category', lookup_choose_model:'2. Choose model',
     lookup_empty:'Select a category and model to see the 12 / 24 / 36-month price.',
-    lookup_price_label:'LG Subscribe price:', lookup_m12:'12 months', lookup_m24:'24 months', lookup_m36:'36 months',
-    promo_badge:'Special Offer', promo_h2:'Air Care Offer — Southern Region',
-    promo_value:'Gift voucher up to ₫1,500,000',
-    promo_note:'On eligible Air Care purifiers purchased in the Southern region · Valid 06/10 – 30/10/2026',
-    promo_cta:'View Air Care Offers',
+    lookup_detail:'View product details →', lookup_price_label:'LG Subscribe price:', lookup_m12:'12 months', lookup_m24:'24 months', lookup_m36:'36 months',
+    promo_badge:'Special Offer', promo_h2:'LG Subscribe Offers — until 30/11',
+    promo_value:'Urbox voucher & gifts included',
+    promo_note:'Promotion valid until the end of 30/11/2026 · On eligible products',
+    promo_cta:'View offers',
     steps_h2:'How to get LG Subscribe', steps_p:'Three simple steps with help from our on-site team.',
     step1_h:'Choose your LG product', step1_p:'Pick any eligible LG product available at this kiosk.',
     step2_h:'Select LG Subscribe', step2_p:'Choose the subscription plan and period that suits your needs.',
@@ -599,11 +601,11 @@ const I18N = {
     feat6:'Được đội ngũ LG tại chỗ hướng dẫn đăng ký',
     lookup_tag:'Tìm gói chính xác của bạn', lookup_choose_cat:'1. Chọn danh mục', lookup_choose_model:'2. Chọn sản phẩm',
     lookup_empty:'Chọn danh mục và sản phẩm để xem giá theo kỳ hạn 12 / 24 / 36 tháng.',
-    lookup_price_label:'Giá LG Subscribe:', lookup_m12:'12 tháng', lookup_m24:'24 tháng', lookup_m36:'36 tháng',
-    promo_badge:'Ưu đãi đặc biệt', promo_h2:'Ưu đãi Chăm sóc không khí — Khu vực miền Nam',
-    promo_value:'Phiếu quà tặng lên đến ₫1.500.000',
-    promo_note:'Áp dụng cho máy lọc không khí Air Care mua tại khu vực miền Nam · Có hiệu lực 06/10 – 30/10/2026',
-    promo_cta:'Xem ưu đãi Air Care',
+    lookup_detail:'Xem chi tiết sản phẩm →', lookup_price_label:'Giá LG Subscribe:', lookup_m12:'12 tháng', lookup_m24:'24 tháng', lookup_m36:'36 tháng',
+    promo_badge:'Ưu đãi đặc biệt', promo_h2:'Ưu đãi LG Subscribe — đến hết 30/11',
+    promo_value:'Voucher Urbox & quà tặng kèm',
+    promo_note:'Chương trình khuyến mãi kéo dài đến hết 30/11/2026 · Áp dụng cho sản phẩm tham gia',
+    promo_cta:'Xem ưu đãi',
     steps_h2:'Cách đăng ký LG Subscribe', steps_p:'Ba bước đơn giản với sự hỗ trợ từ đội ngũ tại chỗ.',
     step1_h:'Chọn sản phẩm LG', step1_p:'Chọn bất kỳ sản phẩm LG đủ điều kiện tại kiosk này.',
     step2_h:'Chọn LG Subscribe', step2_p:'Chọn gói đăng ký và kỳ hạn phù hợp với nhu cầu của bạn.',
@@ -642,11 +644,11 @@ const I18N = {
     feat6:'현장 LG 팀의 안내를 받는 등록 절차',
     lookup_tag:'나에게 맞는 요금제 찾기', lookup_choose_cat:'1. 카테고리 선택', lookup_choose_model:'2. 모델 선택',
     lookup_empty:'카테고리와 모델을 선택하면 12 / 24 / 36개월 요금을 확인할 수 있습니다.',
-    lookup_price_label:'LG Subscribe 가격:', lookup_m12:'12개월', lookup_m24:'24개월', lookup_m36:'36개월',
-    promo_badge:'특별 혜택', promo_h2:'에어케어 혜택 — 남부 지역',
-    promo_value:'최대 ₫1,500,000 상당의 기프트 바우처',
-    promo_note:'남부 지역에서 구매한 대상 에어케어 공기청정기 대상 · 2026년 10월 6일 – 10월 30일까지 유효',
-    promo_cta:'에어케어 혜택 보기',
+    lookup_detail:'제품 상세 보기 →', lookup_price_label:'LG Subscribe 가격:', lookup_m12:'12개월', lookup_m24:'24개월', lookup_m36:'36개월',
+    promo_badge:'특별 혜택', promo_h2:'LG Subscribe 혜택 — 11월 30일까지',
+    promo_value:'Urbox 바우처 및 증정품 제공',
+    promo_note:'프로모션은 2026년 11월 30일까지 진행됩니다 · 대상 제품에 한함',
+    promo_cta:'혜택 보기',
     steps_h2:'LG Subscribe 신청 방법', steps_p:'현장 팀의 도움으로 진행하는 세 가지 간단한 단계.',
     step1_h:'LG 제품 선택', step1_p:'이 키오스크에서 이용 가능한 대상 LG 제품을 선택하세요.',
     step2_h:'LG Subscribe 선택', step2_p:'필요에 맞는 구독 요금제와 기간을 선택하세요.',
@@ -707,14 +709,15 @@ function renderResult(){
   emptyEl.style.display = 'none';
   resultEl.style.display = 'block';
   resultEl.innerHTML = `
-    ${IMG_MAP[p.m] ? `<div class="lookup-img"><img src="${IMG_MAP[p.m]}" alt="${p.m}"></div>` : ''}
+    ${IMG_MAP[p.m] ? `<a href="product-detail.html?model=${encodeURIComponent(p.m)}" style="display:block"><div class="lookup-img"><img src="${IMG_MAP[p.m]}" alt="${p.m}"></div></a>` : ''}
     <div class="lookup-model">${p.m}</div>
     <div class="lookup-onetime">${t.lookup_price_label} ${fmtVND(p.ot)}</div>
     <div class="lookup-plans">
       <div class="lookup-plan"><div class="lp-term">${t.lookup_m12}</div><div class="lp-amount">${fmtVND(p.m12)}<span>${t.unit_month}</span></div></div>
       <div class="lookup-plan"><div class="lp-term">${t.lookup_m24}</div><div class="lp-amount">${fmtVND(p.m24)}<span>${t.unit_month}</span></div></div>
       <div class="lookup-plan"><div class="lp-term">${t.lookup_m36}</div><div class="lp-amount">${fmtVND(p.m36)}<span>${t.unit_month}</span></div></div>
-    </div>`;
+    </div>
+    <a class="lookup-detail" href="product-detail.html?model=${encodeURIComponent(p.m)}">${t.lookup_detail}</a>`;
 }
 
 function setLang(l){
